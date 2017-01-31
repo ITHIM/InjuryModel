@@ -1,8 +1,5 @@
 library(tidyverse)
 load(file="Stats19_05-15_ready_31_1_2017.rda") # contains single object Stats19
-
-data <- d
-
 ## ss19 <- sample_frac(ss19, 0.01) # if we want a 1% random sample
 
 ###
@@ -11,7 +8,7 @@ data <- d
 # [7] "strike_mode"    "strike_male"   
 ###
 
-ss19 <- select(data, year, cas_mode, cas_severity) %>%
+ss19 <- select(d, everything) %>%
   mutate(year=factor(year)) %>%    # treat year as categorical for the moment
   filter(cas_male %in% c(1, 0)) %>%
   filter(Casualty_Type %in% c("cyclist","pedestrian", "car/taxi"))
