@@ -13,11 +13,11 @@ ss19 <- select(d, everything()) %>%
   filter(cas_male %in% c(1, 0)) %>%
   filter(cas_mode %in% c("cyclist","pedestrian", "car/taxi"))
 
-ssg <- group_by(ss19, YEAR, Casualty_Type, Age_of_Casualty, Sex_of_Casualty, Casualty_Severity) %>% 
+ssg <- group_by(ss19, year, cas_mode, cas_male, cas_severity, strike_mode) %>% 
   summarise(count=n()) %>% 
   droplevels() %>% 
   as.data.frame() %>%    # remove "grouped" class, which breaks filling with zeroes
-  complete(YEAR, Casualty_Type, Age_of_Casualty, Sex_of_Casualty, Casualty_Severity, fill=list(count=0))
+  complete(year, cas_mode, cas_male, cas_severity, strike_mode, fill=list(count=0))
 
 fit <- glm(count ~ Sex_of_Casualty + Age_of_Casualty + Casualty_Type, data=ssg, family=poisson)
 summary(fit)
