@@ -17,7 +17,10 @@ ssg <- group_by(ss19, year, cas_mode, cas_male, cas_severity, strike_mode) %>%
   summarise(count=n()) %>% 
   droplevels() %>% 
   as.data.frame() %>%    # remove "grouped" class, which breaks filling with zeroes
-  complete(year, cas_mode, cas_male, cas_severity, strike_mode, fill=list(count=0))
+  complete(year, cas_mode, cas_male, cas_severity, strike_mode, fill=list(count=0)) %>%
+  mutate(cas_dist = ifelse(cas_mode=="pedestrian", 134.6,
+                           ifelse(cas_mode=="cyclist", 30.9,
+                                  ifelse(cas_mode=="car/taxi", 4000.1, NA))))
 
 fit <- glm(count ~ Sex_of_Casualty + Age_of_Casualty + Casualty_Type, data=ssg, family=poisson)
 summary(fit)
