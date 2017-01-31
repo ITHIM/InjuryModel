@@ -1,14 +1,20 @@
 library(tidyverse)
-load(file="~/Dropbox/STATS19/combined0514.rda") # contains single object Stats19
+load(file="Stats19_05-15_ready_31_1_2017.rda") # contains single object Stats19
+
+data <- d
 
 ## ss19 <- sample_frac(ss19, 0.01) # if we want a 1% random sample
 
-ss19 <- select(Stats19, YEAR, Casualty_Type, Age_of_Casualty, Age_Band_of_Casualty, Sex_of_Casualty, Casualty_Severity) %>%
-  mutate(YEAR=factor(YEAR)) %>%    # treat year as categorical for the moment
-  filter(Age_of_Casualty != "-1") %>%
-  mutate(Age_Band_of_Casualty=factor(Age_Band_of_Casualty)) %>%   ## Age perhaps nicer modelled as continuous: categorical throws away information
-  filter(Sex_of_Casualty %in% c("Male","Female")) %>%
-  filter(Casualty_Type %in% c("Cyclist","Pedestrian", "Car occupant"))
+###
+# [1] "accident_index" "year"           "roadtype"      
+# [4] "cas_severity"   "cas_mode"       "cas_male"      
+# [7] "strike_mode"    "strike_male"   
+###
+
+ss19 <- select(data, year, cas_mode, cas_severity) %>%
+  mutate(year=factor(year)) %>%    # treat year as categorical for the moment
+  filter(cas_male %in% c(1, 0)) %>%
+  filter(Casualty_Type %in% c("cyclist","pedestrian", "car/taxi"))
 
 ssg <- group_by(ss19, YEAR, Casualty_Type, Age_of_Casualty, Sex_of_Casualty, Casualty_Severity) %>% 
   summarise(count=n()) %>% 
