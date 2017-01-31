@@ -8,7 +8,7 @@ load(file="Stats19_05-15_ready_31_1_2017.rda") # contains single object Stats19
 # [7] "strike_mode"    "strike_male"   
 ###
 
-ss19 <- select(d, everything) %>%
+ss19 <- select(d, everything()) %>%
   mutate(year=factor(year)) %>%    # treat year as categorical for the moment
   filter(cas_male %in% c(1, 0)) %>%
   filter(Casualty_Type %in% c("cyclist","pedestrian", "car/taxi"))
