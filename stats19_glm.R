@@ -27,7 +27,7 @@ fit <- glm(count ~ cas_male + cas_mode + cas_severity + strike_mode, data=ssg, f
 
 ## add predicted count with standard error 
 pred <- predict(fit, se.fit=TRUE, type="response")
-ssg <- mutate(ssg, count_fit=pred[["fit"]], count_se=pred$se.fit)
+ssg <- mutate(ssg, count_fit=pred[["fit"]], count_se=pred[["se.fit"]])
 as.data.frame(ssg)[1:10,]
 
 ## Predicted counts likely biased and SEs underestimated because we are not including all relevant predictors
@@ -35,7 +35,7 @@ as.data.frame(ssg)[1:10,]
 
 fitsat <- glm(count ~ cas_male*cas_mode*cas_severity*strike_mode, data=ssg, family=poisson)
 pred <- predict(fitsat, se.fit=TRUE, type="response")
-ssg <- mutate(ssg, count_fit_sat=pred[["fit"]], count_se_sat=pred$se.fit)
+ssg <- mutate(ssg, count_fit_sat=pred[["fit"]], count_se_sat=pred[["se.fit"]])
 
 options(scipen=1e+07) # turn off scientific notation for small numbers 
 as.data.frame(ssg)[1:10,]
