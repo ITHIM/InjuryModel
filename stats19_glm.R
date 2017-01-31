@@ -22,25 +22,33 @@ ssg <- group_by(ss19, year, cas_mode, cas_male, cas_severity, strike_mode) %>%
                            ifelse(cas_mode=="cyclist", 30.9,
                                   ifelse(cas_mode=="car/taxi", 4000.1, NA))))
 
-fit <- glm(count ~ Sex_of_Casualty + Age_of_Casualty + Casualty_Type, data=ssg, family=poisson)
-summary(fit)
+fit <- glm(count ~ cas_male + cas_mode + cas_severity + strike_mode, data=ssg, family=poisson)
+## note: Can't include both casualty mode and distance in the same model if distance is just a function of mode
 
-## Including severity as a predictor
-fit2 <- glm(count ~ Sex_of_Casualty + Age_of_Casualty + Casualty_Type + Casualty_Severity, data=ssg, family=poisson)
-summary(fit2) # lower AIC indicates more efficient model, measured by balance between fit to data vs. number of parameters 
+## add predicted count with standard error 
+pred <- predict(fit, se.fit=TRUE, type="response")
+ssg <- mutate(ssg, count_fit=pred[["fit"]], count_se=pred$se.fit)
+as.data.frame(ssg)[1:10,]
 
-## "Saturated" model including all variables and their full interactions
-fitsat <- glm(count ~ Sex_of_Casualty*Age_of_Casualty*Casualty_Type*Casualty_Severity*YEAR, data=ssg, family=poisson)
-summary(fitsat) # lower AIC again!
+## Predicted counts likely biased and SEs underestimated because we are not including all relevant predictors
+## So now fit a "saturated" model including all variables and their full interactions
 
-ssg$count_fit <- fitted(fit2)
-ssg$count_fitsat <- fitted(fitsat)
-plot(ssg$count, ssg$count_fitsat)
-abline(a=0,b=1)
+fitsat <- glm(count ~ cas_male*cas_mode*cas_severity*strike_mode, data=ssg, family=poisson)
+pred <- predict(fitsat, se.fit=TRUE, type="response")
+ssg <- mutate(ssg, count_fit_sat=pred[["fit"]], count_se_sat=pred$se.fit)
+
+options(scipen=1e+07) # turn off scientific notation for small numbers 
+as.data.frame(ssg)[1:10,]
+## fitted counts match observed counts more closely, and standard errors are bigger. 
+
+
+## Model comparison (lower AIC: saturated model is more efficient despite having many more parameters (df))
+AIC(fit, fitsat)
+
 
 ## TODO
+## Include distance properly 
 ## Expert consideration of what variables/interactions should always be included
 ## Some kind of constraints to represent prior knowledge about what should be excluded
 ## Negative binomial model may fit better
-## Put the output of the model into the form we want (predicted count for each combination of categories, and a way of expressing uncertainty about this?)
 ## ...
