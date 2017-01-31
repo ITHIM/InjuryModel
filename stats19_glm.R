@@ -11,7 +11,7 @@ load(file="Stats19_05-15_ready_31_1_2017.rda") # contains single object Stats19
 ss19 <- select(d, everything()) %>%
   mutate(year=factor(year)) %>%    # treat year as categorical for the moment
   filter(cas_male %in% c(1, 0)) %>%
-  filter(Casualty_Type %in% c("cyclist","pedestrian", "car/taxi"))
+  filter(cas_mode %in% c("cyclist","pedestrian", "car/taxi"))
 
 ssg <- group_by(ss19, YEAR, Casualty_Type, Age_of_Casualty, Sex_of_Casualty, Casualty_Severity) %>% 
   summarise(count=n()) %>% 
