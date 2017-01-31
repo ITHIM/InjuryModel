@@ -1,4 +1,5 @@
 library(tidyverse)
+rm (list = ls())
 load(file="Stats19_05-15_ready_31_1_2017.rda") # contains single object Stats19
 ## ss19 <- sample_frac(ss19, 0.01) # if we want a 1% random sample
 
@@ -20,7 +21,10 @@ ssg <- group_by(ss19, year, cas_mode, cas_male, cas_severity, strike_mode) %>%
   complete(year, cas_mode, cas_male, cas_severity, strike_mode, fill=list(count=0)) %>%
   mutate(cas_dist = ifelse(cas_mode=="pedestrian", 134.6,
                            ifelse(cas_mode=="cyclist", 30.9,
-                                  ifelse(cas_mode=="car/taxi", 4000.1, NA))))
+                                  ifelse(cas_mode=="car/taxi", 4000.1, NA)))) %>%
+  mutate(strike_dist = ifelse(strike_mode=="pedestrian", 134.6,
+                           ifelse(strike_mode=="cyclist", 30.9,
+                                  ifelse(strike_mode=="car/taxi", 2419.1, NA))))
 
 fit <- glm(count ~ cas_male + cas_mode + cas_severity + strike_mode, data=ssg, family=poisson)
 ## note: Can't include both casualty mode and distance in the same model if distance is just a function of mode
