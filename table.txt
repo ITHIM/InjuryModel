@@ -1,0 +1,10 @@
+Victim mode	Striker mode	No casualties	Victim dist	striker dist 
+Walk	Walk	1	134.6	134.6
+Walk	Cycle	6	134.6	30.9
+Walk	MV	80	134.6	2419.1
+Cycle	Walk	0	30.9	134.6
+Cycle	Cycle	22	30.9	30.9
+Cycle	MV	3	30.9	2419.1
+MV	Walk	55	4000.1	134.6
+MV	Cycle	88	4000.1	30.9
+MV	MV	222	4000.1	2419.1
