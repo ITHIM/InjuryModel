@@ -93,16 +93,16 @@ stopped$random0 = runif(n = nrow(stopped),min = 0, max = 1)
 # 
 
 ## DEFINE LARGEST AND SECOND LARGEST OTHER VEHICLES, TO BECOME STRIKE VEHICLE
-stopped = subset(stopped, select = c(accident_index,veh_mode,veh_reference,
+stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_reference,
                                      veh_male, veh_age, numped, ped_cas_male,
                                      ped_cas_age ))
 
 # duplicates drop
-stopped = stopped[!duplicated(stopped),]
-stopped$veh_modei=- stopped$veh_mode
-stopped$veh_modei[stopped$veh_modei == -99] = 99
+stopped1 = stopped1[!duplicated(stopped1),]
+stopped1$veh_modei=- stopped1$veh_mode
+stopped1$veh_modei[stopped1$veh_modei == -99] = 99
 
-stopped$random1 = runif(n = nrow(stopped),min = 0, max = 1)
+stopped1$random1 = runif(n = nrow(stopped1),min = 0, max = 1)
 
 ## another little_n !!
 # by accident_index (veh_modei random1), sort: gen littlen=_n
@@ -113,11 +113,70 @@ stopped$random1 = runif(n = nrow(stopped),min = 0, max = 1)
 # 			rename veh_`x'2 veh_`x'_secondlarge
 # 			}
 
-stopped = subset(x = stopped, select = c(accident_index,veh_reference, veh_mode,
+stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mode,
                                          veh_male, veh_age, littlen, numped, 
                                          ped_cas_male, ped_cas_age))
 
-stopped = reshape
+#! stopped1 = reshape(data = stopped1,       ********)
+
+stopped1=rename(.data = stopped1,   veh_mode_firstlarge = veh_mode,
+                                  veh_male_firstlarge = veh_male,
+                                  veh_age_firstlarge = veh_age,
+                                  veh_mode_secondlarge = veh_mode,
+                                  veh_male_secondlarge = veh_male,
+                                  veh_age_secondlarge = veh_age)
+
+
+stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] =  1
+stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge)] = 8
+
+
+stopped1$veh_male_secondlarge[stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1] = stopped1$ped_cas_male
+stopped1$veh_age_secondlarge[stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1] = stopped1$ped_cas_age
+
+stopped1 = subset(stopped1, select =c(accident_index, veh_reference_firstlarge, veh_reference_secondlarge,
+                                    veh_mode_firstlarge, veh_mode_secondlarge, veh_male_firstlarge,
+                                    veh_male_secondlarge, veh_age_firstlarge, veh_age_secondlarge)   )
+
+
+write.csv(stopped1, file = './stats19_strikemode.dta')
+
+stopped = inner_join(stopped, stopped1, by="accident_index")
+
+i= c('mode','male','age')
+
+for (x in i) {
+  stopped[[paste0('strike_', i) ]]= NULL
+  stopped[[paste0('strike_', i) ]][stopped$cas_mode==1] = stopped[[paste0('veh_', i) ]]     #if cas_mode==1
+  stopped[[paste0('strike_', i, '_secondlarge') ]][stopped$veh_reference== stopped$veh_reference_firstlarge
+                                                   & stopped$cas_mode != 1] = stopped[[paste0('veh_', i, '_secondlarge') ]]
+              }  
+  
+
+stopped$modelab = stopped$strike_mode
+
+#IMPUTE AT RANDOM MISSING SEX OF A) CASUALTY AND B) STRIKER, 
+# IN PROPORTION TO OBSERVED SEX RATIO OF STRIKER COLLISIONS FOR EACH MODE [not done for age]
+
+stopped$random3 = runif(n = nrow(stopped), min = 0, max = 1)
+table( stopped$cas_male, stopped$miss)   # missing data 0.2% casualty sex
+
+table( stopped$cas_male, stopped$miss) 
+table(stopped$strike_male[stopped$strike_mode!=8] , miss )  # missing data 6.5% striker sex
+
+# foreach x in cas strike {
+#   gen `x'_mode_sexratio=.
+# 			foreach i in 1 2 3 4 5 6 7 99 {
+# 			sum `x'_male if `x'_mode==`i'
+# 			replace `x'_mode_sexratio=r(mean) if `x'_mode==`i'
+# 			}
+# 			}
+
+
+
+
+
+
 
 # #create male flag
 # stopped$malepedflag=NULL
