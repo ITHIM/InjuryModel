@@ -11,7 +11,7 @@
 # ** MERGE 2005-2014 AND 2015 DATASETS 
 # http://stackoverflow.com/questions/8169323/r-concatenate-two-dataframes
 # should be similar to dplyr::bind_rows()
-fastmerge <- function(d1, d2) {v2
+fastmerge <- function(d1, d2) {
   d1.names <- names(d1)
   d2.names <- names(d2)
   # columns in d1 but not in d2
