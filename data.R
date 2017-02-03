@@ -11,7 +11,7 @@
 # ** MERGE 2005-2014 AND 2015 DATASETS 
 # http://stackoverflow.com/questions/8169323/r-concatenate-two-dataframes
 # should be similar to dplyr::bind_rows()
-fastmerge <- function(d1, d2) {
+fastmerge <- function(d1, d2) {v2
   d1.names <- names(d1)
   d2.names <- names(d2)
   # columns in d1 but not in d2
@@ -61,7 +61,7 @@ get.data <- function(is.local=TRUE, local.dir=".")
   c2015 <- read.csv(unz(temp, file2015[3]))
   assign("Accidents0515",fastmerge(a2014,a2015), envir=.GlobalEnv)
   assign("Casualties0515",fastmerge(c2014,c2015), envir=.GlobalEnv)
-  assign("Vehicles0515",fastmerge(a2014,a2015), envir=.GlobalEnv)
+  assign("Vehicles0515",fastmerge(v2014,v2015), envir=.GlobalEnv)
   unlink(temp)
   rm(v2014,c2014,a2014,v2015,a2015,c2015)
   } else {
