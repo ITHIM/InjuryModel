@@ -1,11 +1,6 @@
 # 3-2-2017 MRC-Epid JHZ
 # converted from Anna Goodman's Stata code
 
-<<<<<<< HEAD
-=======
-setwd("z_ITHIMfiles/Stats19/")
-
->>>>>>> 8a98406b725470cf1058d75784b407e47ebb8e1f
 # DOWNLOAD 2005-2014 AND 2015 DATA FROM https://data.gov.uk/dataset/road-accidents-safety-data. SAVE THESE IN 'Stats19\1a_DataOriginal' FOLDER
 # DOWNLOAD CODEBOOK FROM https://discover.ukdataservice.ac.uk/catalogue?sn=7752
 # MAKE AN EMPTY FOLDER '1b_DataCreated', IN WHICH '0-temp'
@@ -108,4 +103,3 @@ avc <- merge(av,Casualties0515[v3],by=c("accident_index","vehicle_reference"))
 # Drop Wales and Scotland
 stopped <- subset(avc,local_authority_.district.<=699)
 
-setwd("../../")
