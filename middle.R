@@ -164,38 +164,68 @@ table( stopped$cas_male, stopped$miss)   # missing data 0.2% casualty sex
 table( stopped$cas_male, stopped$miss) 
 table(stopped$strike_male[stopped$strike_mode!=8] , miss )  # missing data 6.5% striker sex
 
-# foreach x in cas strike {
-#   gen `x'_mode_sexratio=.
-# 			foreach i in 1 2 3 4 5 6 7 99 {
-# 			sum `x'_male if `x'_mode==`i'
-# 			replace `x'_mode_sexratio=r(mean) if `x'_mode==`i'
-# 			}
-# 			}
+for (x in c('cas', 'strike')) {
+  stopped[[paste0(x,'_mode_sexratio')]]= NULL
+			
+  for (i in c(1:7,99) ) {
+			temp.mean = mean( stopped[[paste0(x, '_male']] [paste(x, '_mode')== i]  #the mean in the summary
+			stopped[[ paste0(x, '_mode_sexratio')]][paste(x, '_mode')== i]=  temp.mean 
+		                    }
+			                }
+
+sel= is.na(stopped$cas_male) & (stopped$random3 <= stopped$cas_mode_sexratio) & !is.na(stopped$cas_severity) 
+stopped$cas_male[ sel ] = 1 
+
+sel= is.na(stopped$cas_male) & (stopped$random3 > stopped$cas_mode_sexratio) & !is.na(stopped$cas_severity)
+stopped$cas_male[ sel ] = 0
+
+sel= is.na(stopped$strike_male) & (stopped$random3 <= stopped$cas_mode_sexratio) & stopped$strike_mode != 8
+stopped$strike_male[ sel ] = 1 
+
+sel= is.na(stopped$strike_male) & (stopped$random3 > stopped$cas_mode_sexratio) & stopped$strike_mode != 8
+stopped$strike_male[ sel ] = 0
+
+#SAVE
+stopped = stopped[! is.na(stopped$cas_severity)]
+stopped = arrange(stopped, accident_index, year, roadtype, cas_severity, cas_mode,
+                  cas_male, cas_age, strike_mode, strike_male, strike_age)
+
+#save a range of columns
+ncol1=which(names(stopped)=='accident_index')
+ncol2=which(names(stopped)=='strike_age')
+
+stopped = stopped [, c(ncol1:ncol2) ]
+
+for (i in 1:names(stopped)) {
+  names(stopped)[i]=paste0('var', names(stopped)[i])
+                            }
+
+write.csv(stopped, './1b_DataCreated/stats19_05-15_ready_v3.csv')
 
 
 
+# ***************************
+#   * ANALYSIS
+# ***************************
 
-
-
-
-# #create male flag
-# stopped$malepedflag=NULL
-# stopped$malepedflag[stopped$cas_mode==1 & stopped$cas_male==1] = 1
-# stopped.gr = base::aggregate(stopped$malepedflag, data=stopped , FUN=sum)   ##ERROR
-# names(stopped.gr)=c('a', 'b')       ## !!
+# use "1b_DataCreated\Stats19_05-15_ready.dta", clear
+# recode strike_mode 3=5 5=6 6=3 7=7 8=9 99=8, gen(strike_modecat)
+# recode cas_mode 3=5 5=6 6=3 7=7 8=9 99=8, gen(cas_modecat)
+# label define modecatlab 1 "walk" 2 "cycle" 3 "bus" 4 "car" 5 "mbike" 6 "van" 7 "lorry" 8 "other" 9 "no other vehicle" , modify
+# label values strike_modecat modecatlab
+# label values cas_modecat modecatlab
 # 
-# #create female flag
-# stopped$femalepedflag=NULL
-# stopped$femalepedflag[stopped$cas_mode==1 & stopped$cas_male==0] = 1
-# stopped.gr = base::aggregate(stopped$femalepedflag, data=stopped , FUN=sum)
-# 
-# names(stopped.gr)=c('a', 'numfemaleped')
-# 
-# ##inner_join()
-# 
-# drop=c('pedflag','malepedflag', 'femalepedflag')
-# stopped = stopped[, ! (names(stopped) %in% drop) ]
-
-# ## save as .intermediate .CSV file 
-
-
+# * CASUALTY PERSPECTIVE (only use pedestrian, cyclist, motorcycle, car/taxi)
+# foreach i in 1 0 {
+#   foreach j in 1 2 3 {
+#     bysort cas_severity: tab cas_modecat strike_modecat if cas_male==`i' & roadtype==`j'
+#   }
+#   }
+#     
+#     * STRIKER PERSPECTIVE
+#     foreach i in 1 0 {
+#     foreach j in 1 2 3 {
+#     bysort cas_severity: tab strike_modecat cas_modecat if strike_male==`i' & roadtype==`j'
+#     }
+#     }
+#     
