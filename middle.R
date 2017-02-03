@@ -21,6 +21,7 @@ stopped$year = td[,3]
 rm(td)
 
 # recode ROAD CLASS
+names(stopped)[4]= 'st_road_class'
 stopped$st_road_class <-  recode(stopped$st_road_class,'1'=1, '2' = 1, '3'=2, '4'=3,'5'=3, '6'=3)    #1 stays unchanged
 
 #add column roadtypelab
@@ -67,7 +68,7 @@ stopped= inner_join(stopped, stopped.gr, by="accident_index")
 #create male flag
 stopped$malepedflag=NULL
 stopped$malepedflag[stopped$cas_mode==1 & stopped$cas_male==1] = 1
-stopped.gr = base::aggregate(stopped$malepedflag, data=stopped , FUN=sum)
+stopped.gr = base::aggregate(stopped$malepedflag, data=stopped , FUN=sum)   ##ERROR
 names(stopped.gr)=c('a', 'b')       ## !!
 
 #create female flag
@@ -83,19 +84,5 @@ drop=c('pedflag','malepedflag', 'femalepedflag')
 stopped = stopped[, ! (names(stopped) %in% drop) ]
 
 # ## save as .intermediate .CSV file 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
