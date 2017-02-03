@@ -85,7 +85,8 @@ get.data <- function(is.local=TRUE, local.dir=".")
 # in current directory
 # get.data()
 # in local.dir
-# get.data(local.dir="C:/Users/Jing Hua Zhao/modeling/InjuryModel/z_ITHIMfiles/Stats19")
+# get.data(local.dir="z_ITHIMfiles/Stats19")
+# setwd("../../")
 # Internet source
 get.data(is.local=FALSE)
 
