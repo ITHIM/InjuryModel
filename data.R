@@ -67,6 +67,7 @@ get.data <- function(is.local=TRUE, local.dir=".")
   } else {
     
   # data are downloaded locally
+  wd <- getwd()
   setwd(local.dir)
 
   for (x in c("Accidents", "Casualties", "Vehicles"))
@@ -78,6 +79,7 @@ get.data <- function(is.local=TRUE, local.dir=".")
     assign(paste(x,'0515',sep=""), fastmerge(in2014,in2015), envir=.GlobalEnv)
     rm(in2014,in2015)
   }
+  setwd(wd)
   }
 }
 
@@ -86,7 +88,6 @@ get.data <- function(is.local=TRUE, local.dir=".")
 # get.data()
 # in local.dir
 # get.data(local.dir="z_ITHIMfiles/Stats19")
-# setwd("../../")
 # Internet source
 get.data(is.local=FALSE)
 
