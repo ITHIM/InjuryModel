@@ -1,5 +1,5 @@
-# 3-2-2017 MRC-Epid JHZ
-# converted from Anna Goodman's Stata code
+# 4-2-2017 MRC-Epid JHZ
+# converted from Anna Goodman's Stata code and add Internet capability
 
 # DOWNLOAD 2005-2014 AND 2015 DATA FROM https://data.gov.uk/dataset/road-accidents-safety-data. SAVE THESE IN 'Stats19\1a_DataOriginal' FOLDER
 # DOWNLOAD CODEBOOK FROM https://discover.ukdataservice.ac.uk/catalogue?sn=7752
@@ -39,14 +39,17 @@ get.data <- function(is.local=TRUE, local.dir=".")
   # url2014 contains file2014 from 2005-2014
   url2014 <- "http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/Stats19_Data_2005-2014.zip"
   # individual files
-  file2014 <- paste("DfTRoadSafety_",c("Vehicles_2014.csv","Casualties_2014.csv","Accidents_2014.csv"),sep="")
+  file2014 <- c("Vehicles0514.csv","Casualties0514.csv","Accidents0514.csv")
+  ## version for 2014 only
+  ## file2014 <- paste("DfTRoadSafety_",c("Vehicles_2014.csv","Casualties_2014.csv","Accidents_2014.csv"),sep="")
 
   temp <- tempfile()
-  download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Accidents_2014.zip",temp)
+  download.file(url2014,temp)
+  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Accidents_2014.zip",temp)
   a2014 <- read.csv(unz(temp, file2014[3]))
-  download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Casualties_2014.zip",temp)
+  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Casualties_2014.zip",temp)
   c2014 <- read.csv(unz(temp, file2014[2]))
-  download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Vehicles_2014.zip",temp)
+  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Vehicles_2014.zip",temp)
   v2014 <- read.csv(unz(temp, file2014[1]))
   names(a2014)[names(a2014)=="ï..Accident_Index"] <- "Accident_Index"
   names(c2014)[names(c2014)=="ï..Accident_Index"] <- "Accident_Index"
@@ -104,4 +107,3 @@ avc <- merge(av,Casualties0515[v3],by=c("accident_index","vehicle_reference"))
 
 # Drop Wales and Scotland
 stopped <- subset(avc,local_authority_.district.<=699)
-
