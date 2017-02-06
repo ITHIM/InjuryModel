@@ -89,14 +89,29 @@ stopped= inner_join(stopped, stopped.gr, by="accident_index")
 stopped$random0 = runif(n = nrow(stopped),min = 0, max = 1)
 
 ## LITTLE N's
-# foreach x in male age {
-#   by accident_index cas_mode (random0), sort: gen littlen_cas`x'=_n
-# 			gen ped_cas_`x'_temp=cas_`x'
-# 			replace ped_cas_`x'_temp=. if cas_mode!=1 | littlen_cas`x'!=1  // pedestrian age/sex set as equal to one randomly selected pedestrian within the accident
-# 			bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
-# 			drop littlen_cas`x' ped_cas_`x'_temp
-# 			}
-# 
+for (x in c('male', 'age')) {
+   
+   td= stopped
+   by_td <- td %>% group_by(accident_index, cas_mode)   # groups by 2 vars
+   vartemp = paste0('littlen_cas', x)
+   td <- mutate(arrange(td,accident_index, cas_mode,random0),
+                vartemp=unlist(lapply(group_size(by_td),FUN=seq_len)))    # sorts by 3 vars->generate index
+   
+   
+		td[[paste0('ped_cas_', x, '_temp') ]] = td[[ paste0('cas_', x) ]]
+		
+		td[[ paste0('ped_cas_', x, '_temp') ]][ td$cas_mode!=1 | td$vartemp!=1  ] = NA
+			
+    #replace ped_cas_`x'_temp=. if cas_mode!=1 | littlen_cas`x'!=1  // pedestrian age/sex set as equal to one randomly selected pedestrian within the accident
+		#td[[ paste0('ped_cas_', x, '_temp') ]] 
+		
+    #bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
+		td  = aggregate(td[[vartemp]], by = list(td$accident_index), FUN = max)
+		
+	  td[[paste0('littlen_cas', x)]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
+    #drop littlen_cas`x' ped_cas_`x'_temp
+			}
+
 
 ## DEFINE LARGEST AND SECOND LARGEST OTHER VEHICLES, TO BECOME STRIKE VEHICLE
 stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_reference,
