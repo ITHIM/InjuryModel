@@ -8,7 +8,7 @@ library(dplyr)
 library(tidyr)
 
 #reading in the data
-ss19<-read.dta13("C:/Users/jw745/Dropbox/z_ITHIMfiles/Stats19/1b_DataCreated/Stats19_05-15_ready_v3.dta")
+load("Stats19.rda")
 ss19<-tbl_df(ss19)
 #adding age bands
 ss19$cas_age_band= cut(ss19$cas_age, breaks = c(0, 20,40,60,80,110), right = FALSE)
