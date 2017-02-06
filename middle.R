@@ -42,6 +42,9 @@ stopped$veh_mode = recode(stopped$vehicle_type,'-1'=99, '1'=2, '2'=3,'3'=3, '4'=
                               '10'=6, '11'=6, '16'=99, '17'=99,'18'=99, '19'=5, '20'=7, '21'=7, '22'=99,
                               '23'=3, '90'=99, '97'=3, '98'=7 ) 
 
+#keep integer values for stopped1$veh_mode
+stopped$veh_mode.int = stopped$veh_mode 
+
 stopped$cas_mode   = stopped$veh_mode  
 stopped$cas_mode[ stopped$casualty_class==3]   = 1
 stopped$cas_mode[ is.na(stopped$cas_severity)]   = NA
@@ -53,6 +56,7 @@ modelab=data.frame(veh_mode=c(1,2,3,4,5,6,7,8,99), modelab=c("pedestrian","cycli
 stopped = inner_join(stopped, modelab, by='veh_mode')
 stopped$modelab = as.character(stopped$modelab)
 
+ 
 stopped$veh_mode = stopped$cas_mode = stopped$modelab   #CAUTION: integers replaced by labels !!
 
 stopped$cas_male = recode(stopped$sex_of_casualty, '-1'=NULL,'1' =1, '2'=0)
@@ -88,10 +92,11 @@ stopped= inner_join(stopped, stopped.gr, by="accident_index")
 # set seed 2010
 stopped$random0 = runif(n = nrow(stopped),min = 0, max = 1)
 
+td= stopped
+
 ## LITTLE N's
 for (x in c('male', 'age')) {
-   
-   td= stopped
+
    by_td <- td %>% group_by(accident_index, cas_mode)   # groups by 2 vars
    vartemp = paste0('littlen_cas', x)
    td <- mutate(arrange(td,accident_index, cas_mode,random0),vartemp=unlist(lapply(group_size(by_td),FUN=seq_len)))    # sorts by 3 vars->generate index
@@ -112,17 +117,21 @@ for (x in c('male', 'age')) {
 		
 	  td[[paste0('littlen_cas', x)]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
     #drop littlen_cas`x' ped_cas_`x'_temp
+	  
 			}
 
+#remove loop intermediate components & collect
+rm(td.gr)
+stopped= td
 
 ## DEFINE LARGEST AND SECOND LARGEST OTHER VEHICLES, TO BECOME STRIKE VEHICLE
-stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_reference,
+stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_mode.int, veh_reference,
                                      veh_male, veh_age, numped, ped_cas_male,
                                      ped_cas_age ))
 
 # duplicates drop
 stopped1 = stopped1[!duplicated(stopped1),]
-stopped1$veh_modei=- stopped1$veh_mode
+stopped1$veh_modei = -1 *stopped1$veh_mode.int
 stopped1$veh_modei[stopped1$veh_modei == -99] = 99
 
 stopped1$random1 = runif(n = nrow(stopped1),min = 0, max = 1)
