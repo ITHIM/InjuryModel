@@ -1,18 +1,22 @@
 
-rm(list=ls())
+# carries on processing object: stopped  
+
+#deletes legacy objects
+rm(Accidents0515,av,avc, Casualties0515,Vehicles0515)
 
 library(stringr)
 library(readstata13)
 library(dplyr)
 
-stopped = readstata13::read.dta13('stopped.dta')
-stopped = stopped[, c(1:12)]   # clean odd columns errors
+#stopped = read.csv('stopped.csv')
+#stopped = readstata13::read.dta13('stopped.dta')    #only in casestopped object is not downloaded
+stopped = stopped[, c(1:14)]   # clean odd columns errors
 
 stopped = dplyr::rename(stopped,  cas_severity = casualty_severity )
 severitylab=data.frame(cas_severity=c(1,2,3), severitylab=c("Fatal","Serious","Slight"))
 
-# adds severity lab column (WATCH OUT NA LINES)
-stopped=inner_join(stopped, severitylab, by="cas_severity")
+# adds severity lab column 
+stopped = inner_join(stopped, severitylab, by="cas_severity")
 stopped$severitylab = as.character(stopped$severitylab)   # to char type
 stopped$cas_severity = stopped$severitylab
 
