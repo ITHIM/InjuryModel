@@ -7,6 +7,7 @@ rm(Accidents0515,av,avc, Casualties0515,Vehicles0515)
 library(stringr)
 library(readstata13)
 library(dplyr)
+library(stats)
 
 #stopped = read.csv('stopped.csv')
 #stopped = readstata13::read.dta13('stopped.dta')    #only in casestopped object is not downloaded
@@ -60,14 +61,15 @@ stopped$veh_male = recode(stopped$sex_of_driver, '-1'=NULL, '1'=1, '2'=0, '3' = 
 #check totals
 stopped$cas_age = stopped$age_of_casualty    #replicate variable
 stopped$cas_age[stopped$stopped$cas_age== -1] = NA   
-stopped$veh_age = recode(stopped$age_of_driver, '-1'= NULL)
+stopped$veh_age = stopped$age_of_driver
+stopped$veh_age[stopped$veh_age== -1 ] = NA
 
 #RENAMING FOR CONSISTENCY
 stopped = dplyr::rename(stopped,  veh_reference  = vehicle_reference )
 
 
 ## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT
-stopped$pedflag = NULL
+stopped$pedflag = NA
 stopped$pedflag[stopped$cas_mode==1] = 1   # CHECK : 1 if cas_mode=1, 0, otherwise
 stopped$pedflag[stopped$cas_mode!=1] = 0
 
@@ -77,7 +79,8 @@ stopped$pedflag[stopped$cas_mode!=1] = 0
 
 # check: add numped column
 stopped= arrange(stopped, accident_index)
-stopped.gr =  dplyr::group_by(.data = stopped,pedflag)
+stopped.gr = aggregate(stopped, by =as.list(stopped$accident_index), FUN=sum)
+# alternative: dplyr::group_by(.data = stopped, pedflag)
 names(stopped.gr) = c('accident_index', 'numped')
 
 stopped= inner_join(stopped, stopped.gr, by="accident_index")
