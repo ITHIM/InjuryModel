@@ -94,13 +94,13 @@ for (x in c('male', 'age')) {
    td= stopped
    by_td <- td %>% group_by(accident_index, cas_mode)   # groups by 2 vars
    vartemp = paste0('littlen_cas', x)
-   td <- mutate(arrange(td,accident_index, cas_mode,random0),
-                vartemp=unlist(lapply(group_size(by_td),FUN=seq_len)))    # sorts by 3 vars->generate index
+   td <- mutate(arrange(td,accident_index, cas_mode,random0),vartemp=unlist(lapply(group_size(by_td),FUN=seq_len)))    # sorts by 3 vars->generate index
    
+    td[[paste0('littlen_cas', x) ]] = td$vartemp   ; td$vartemp =NULL
    
 		td[[paste0('ped_cas_', x, '_temp') ]] = td[[ paste0('cas_', x) ]]
 		
-		td[[ paste0('ped_cas_', x, '_temp') ]][ td$cas_mode!=1 | td$vartemp!=1  ] = NA
+		td[[ paste0('ped_cas_', x, '_temp') ]][ td$cas_mode!=1 | td[[paste0('littlen_cas', x) ]]!=1  ] = NA
 			
     #replace ped_cas_`x'_temp=. if cas_mode!=1 | littlen_cas`x'!=1  // pedestrian age/sex set as equal to one randomly selected pedestrian within the accident
 		#td[[ paste0('ped_cas_', x, '_temp') ]] 
