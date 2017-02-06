@@ -138,16 +138,24 @@ stopped1$random1 = runif(n = nrow(stopped1),min = 0, max = 1)
 
 ## another little_n !!
 # by accident_index (veh_modei random1), sort: gen littlen=_n
-# keep accident_index veh_reference veh_mode veh_male veh_age littlen numped ped_cas_male ped_cas_age  
-# reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
-# foreach x in reference mode male age {
-#   rename veh_`x'1 veh_`x'_firstlarge
-# 			rename veh_`x'2 veh_`x'_secondlarge
-# 			}
+by_stopped1 <- stopped1 %>% group_by(veh_modei, random1)   # groups by 2 vars
+stopped1 <- mutate(arrange(stopped1, veh_modei, random1),littlen=unlist(lapply(group_size(by_stopped1),FUN=seq_len)))    # sorts by 3 vars->generate index
+
 
 stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mode,
                                          veh_male, veh_age, littlen, numped, 
-                                         ped_cas_male, ped_cas_age))
+                                         ped_cas_male, ped_cas_age)   )
+# keep accident_index veh_reference veh_mode veh_male veh_age littlen numped ped_cas_male ped_cas_age  
+
+# reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
+
+
+for (x in c('reference','mode','male','age') {
+  stopped1= dplyr::rename( paste0('veh_', x, '_firstlarge') = paste0('veh_', x)  )
+			rename veh_`x'2 veh_`x'_secondlarge
+			}
+
+
 
 #! stopped1 = reshape(data = stopped1,       ********)
 
