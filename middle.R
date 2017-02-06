@@ -106,7 +106,9 @@ for (x in c('male', 'age')) {
 		#td[[ paste0('ped_cas_', x, '_temp') ]] 
 		
     #bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
-		td  = aggregate(td[[vartemp]], by = list(td$accident_index), FUN = max)
+		td.gr  = aggregate(td[[vartemp]], by = list(td$accident_index), FUN = max)
+		names(td.gr) = c('accident_index', paste0('ped_cas_', x))
+		td  = inner_join(td, td.gr, by= 'accident_index')
 		
 	  td[[paste0('littlen_cas', x)]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
     #drop littlen_cas`x' ped_cas_`x'_temp
