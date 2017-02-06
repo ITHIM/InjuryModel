@@ -26,7 +26,7 @@ stopped$year = td[,3]
 rm(td)
 
 # recode ROAD CLASS
-names(stopped)[4]= 'st_road_class'
+names(stopped)[which(names(stopped)=='x1st_road_class')]= 'st_road_class'
 stopped$st_road_class <-  recode(stopped$st_road_class,'1'=1, '2' = 1, '3'=2, '4'=3,'5'=3, '6'=3)    #1 stays unchanged
 
 #add column roadtypelab
@@ -41,13 +41,10 @@ stopped$veh_mode = recode(stopped$vehicle_type,'-1'=99, '1'=2, '2'=3,'3'=3, '4'=
                               '10'=6, '11'=6, '16'=99, '17'=99,'18'=99, '19'=5, '20'=7, '21'=7, '22'=99,
                               '23'=3, '90'=99, '97'=3, '98'=7 ) 
 
-
 stopped$cas_mode   = stopped$veh_mode
 stopped$cas_mode[ stopped$casualty_class==3]   = 1
-stopped$cas_mode[ is.na(stopped$casualty_class)]   = NA
+stopped$cas_mode[ is.na(stopped$cas_severity)]   = NA
 
-
-##MODE AND SEX OF VEHICLE AND CASUALTY
 modelab=data.frame(veh_mode=c(1,2,3,4,5,6,7,8,99), modelab=c("pedestrian","cyclist","motorcycle",
                                                     "car/taxi","light goods","bus","heavy goods",
                                                     "No other vehicle","other or unknown"))
@@ -60,7 +57,9 @@ stopped$veh_mode = stopped$cas_mode = stopped$modelab
 stopped$cas_male = recode(stopped$sex_of_casualty, '-1'=NULL,'1' =1, '2'=0)
 stopped$veh_male = recode(stopped$sex_of_driver, '-1'=NULL, '1'=1, '2'=0, '3' = NULL)
 
-stopped$cas_age = recode(stopped$age_of_casualty, '-1'= NULL)
+#check totals
+stopped$cas_age = stopped$age_of_casualty    #replicate variable
+stopped$cas_age[stopped$stopped$cas_age== -1] = NA   
 stopped$veh_age = recode(stopped$age_of_driver, '-1'= NULL)
 
 #RENAMING FOR CONSISTENCY
