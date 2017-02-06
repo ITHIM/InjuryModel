@@ -9,9 +9,9 @@ library(readstata13)
 library(dplyr)
 library(stats)
 
-#stopped = read.csv('stopped.csv')
+stopped = read.csv('stopped.csv', header=T)
 #stopped = readstata13::read.dta13('stopped.dta')    #only in casestopped object is not downloaded
-stopped = stopped[, c(1:14)]   # clean odd columns errors
+#stopped = stopped[, c(1:14)]   # clean odd columns errors
 
 stopped = dplyr::rename(stopped,  cas_severity = casualty_severity )
 severitylab=data.frame(cas_severity=c(1,2,3), severitylab=c("Fatal","Serious","Slight"))
@@ -26,7 +26,7 @@ td = str_split(string = stopped$date,pattern = "/",n = 3, simplify = TRUE)
 stopped$year = td[,3]
 rm(td)
 
-# recode ROAD CLASS
+# rename ROAD CLASS
 names(stopped)[which(names(stopped)=='x1st_road_class')]= 'st_road_class'
 stopped$st_road_class <-  recode(stopped$st_road_class,'1'=1, '2' = 1, '3'=2, '4'=3,'5'=3, '6'=3)    #1 stays unchanged
 
@@ -42,7 +42,7 @@ stopped$veh_mode = recode(stopped$vehicle_type,'-1'=99, '1'=2, '2'=3,'3'=3, '4'=
                               '10'=6, '11'=6, '16'=99, '17'=99,'18'=99, '19'=5, '20'=7, '21'=7, '22'=99,
                               '23'=3, '90'=99, '97'=3, '98'=7 ) 
 
-stopped$cas_mode   = stopped$veh_mode
+stopped$cas_mode   = stopped$veh_mode  
 stopped$cas_mode[ stopped$casualty_class==3]   = 1
 stopped$cas_mode[ is.na(stopped$cas_severity)]   = NA
 
@@ -53,7 +53,7 @@ modelab=data.frame(veh_mode=c(1,2,3,4,5,6,7,8,99), modelab=c("pedestrian","cycli
 stopped = inner_join(stopped, modelab, by='veh_mode')
 stopped$modelab = as.character(stopped$modelab)
 
-stopped$veh_mode = stopped$cas_mode = stopped$modelab 
+stopped$veh_mode = stopped$cas_mode = stopped$modelab   #CAUTION: integers replaced by labels !!
 
 stopped$cas_male = recode(stopped$sex_of_casualty, '-1'=NULL,'1' =1, '2'=0)
 stopped$veh_male = recode(stopped$sex_of_driver, '-1'=NULL, '1'=1, '2'=0, '3' = NULL)
@@ -68,8 +68,8 @@ stopped$veh_age[stopped$veh_age== -1 ] = NA
 stopped = dplyr::rename(stopped,  veh_reference  = vehicle_reference )
 
 
-## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT
-stopped$pedflag = NA
+## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT    ???  check!!
+stopped$pedflag = NA   
 stopped$pedflag[stopped$cas_mode==1] = 1   # CHECK : 1 if cas_mode=1, 0, otherwise
 stopped$pedflag[stopped$cas_mode!=1] = 0
 
@@ -79,7 +79,7 @@ stopped$pedflag[stopped$cas_mode!=1] = 0
 
 # check: add numped column
 stopped= arrange(stopped, accident_index)
-stopped.gr = aggregate(stopped, by =as.list(stopped$accident_index), FUN=sum)
+stopped.gr = aggregate(stopped$pedflag, by =list(stopped$accident_index), FUN=sum, na.rm=T)
 # alternative: dplyr::group_by(.data = stopped, pedflag)
 names(stopped.gr) = c('accident_index', 'numped')
 
