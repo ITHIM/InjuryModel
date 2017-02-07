@@ -101,27 +101,34 @@ td= stopped
 for (x in c('male', 'age')) {
 
    by_td <- td %>% group_by(accident_index, cas_mode.int)   # groups by 2 vars
-   vartemp = paste0('littlen_cas', x)
    td <- mutate(arrange(td,accident_index, cas_mode.int,random0),vartemp=unlist(lapply(group_size(by_td),FUN=seq_len)))    # sorts by 3 vars->generate index
    
     td[[paste0('littlen_cas', x) ]] = td$vartemp   ; td$vartemp =NULL
    
-		td[[paste0('ped_cas_', x,'_temp') ]] = td[[ paste0('cas_', x) ]]
+		td[[paste0('ped_cas_', x) ]] = td[[ paste0('cas_', x) ]]
 		
-		td[[ paste0('ped_cas_', x,'_temp') ]][ td$cas_mode.int!=1 | td[[paste0('littlen_cas', x) ]]!=1  ] = NA
+		td[[ paste0('ped_cas_', x) ]][ td$cas_mode.int!=1 | td[[paste0('littlen_cas', x) ]]!=1  ] = NA
 			
     #replace ped_cas_`x'_temp=. if cas_mode!=1 | littlen_cas`x'!=1  // pedestrian age/sex set as equal to one randomly selected pedestrian within the accident
 		#td[[ paste0('ped_cas_', x, '_temp') ]] 
 		
     #bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
+		vartemp = paste0('littlen_cas', x)
 		td.gr  = aggregate(td[[vartemp]], by = list(td$accident_index), FUN = max)
-		names(td.gr) = c('accident_index', paste0('ped_cas_', x,'temp'))
+		names(td.gr) = c('accident_index', paste0('ped_cas_', x,'_temp1'))
 		td  = inner_join(td, td.gr, by= 'accident_index')
 		
-	  td[[paste0('littlen_cas', x,'_temp')]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
+		td[[ paste0('ped_cas_', x) ]] = td[[ paste0('ped_cas_', x,'_temp1') ]] 
+		td[[ paste0('ped_cas_', x,'_temp1')]]  = NULL
+		
+	  td[[paste0('littlen_cas', x)]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
     #drop littlen_cas`x' ped_cas_`x'_temp
 	  
 			}
+
+#stopped = readstata13::read.dta13('predefine.dta'); stopped=stopped[,c(1:30)]
+stopped=inner_join(stopped,td[,c("accident_index","date", "veh_mode.int")],
+by=c("accident_index"="accident_index", "date"="date") )
 
 #remove loop intermediate components & collect
 rm(td.gr)
