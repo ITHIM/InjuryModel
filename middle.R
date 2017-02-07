@@ -8,10 +8,10 @@ library(readstata13)
 library(dplyr)
 library(stats)
 
-# stopped = read.csv('stopped.csv', header=T)
+stopped = read.csv('stopped.csv', header=T)
 #stopped = readstata13::read.dta13('stopped.dta')    #only in casestopped object is not downloaded
 #stopped = stopped[, c(1:14)]   # clean odd columns errors
-load('stopped.rda')
+# load('stopped.rda')
 
 stopped = dplyr::rename(stopped,  cas_severity = casualty_severity )
 severitylab=data.frame(cas_severity=c(1,2,3), severitylab=c("Fatal","Serious","Slight"))
