@@ -114,21 +114,21 @@ for (x in c('male', 'age')) {
 		
     #bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
 		vartemp = paste0('littlen_cas', x)
-		td.gr  = aggregate(td[[vartemp]], by = list(td$accident_index), FUN = max)
+		td.gr  = aggregate(td[[vartemp]], by = list(td$accident_index), FUN = max, na.rm=TRUE)
 		names(td.gr) = c('accident_index', paste0('ped_cas_', x,'_temp1'))
 		td  = inner_join(td, td.gr, by= 'accident_index')
 		
 		td[[ paste0('ped_cas_', x) ]] = td[[ paste0('ped_cas_', x,'_temp1') ]] 
 		td[[ paste0('ped_cas_', x,'_temp1')]]  = NULL
 		
-	  td[[paste0('littlen_cas', x)]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
+	  td[[paste0('littlen_cas', x)]] = NULL
     #drop littlen_cas`x' ped_cas_`x'_temp
 	  
 			}
 
-#stopped = readstata13::read.dta13('predefine.dta'); stopped=stopped[,c(1:30)]
-stopped=inner_join(stopped,td[,c("accident_index","date", "veh_mode.int")],
-by=c("accident_index"="accident_index", "date"="date") )
+# #stopped = readstata13::read.dta13('predefine.dta'); stopped=stopped[,c(1:30)]
+# stopped=inner_join(stopped,td[,c("accident_index","date", "veh_mode.int")],
+# by=c("accident_index"="accident_index", "date"="date") )
 
 #remove loop intermediate components & collect
 rm(td.gr)
