@@ -211,10 +211,10 @@ table(stopped$strike_male[stopped$strike_mode!=8] , stopped$miss )  # missing da
 for (x in c('cas', 'strike')) {
   stopped[[paste0(x,'_mode_sexratio')]]= NA
 			
-#   for (i in c(1:7,99) ) {
-# 			temp.mean = mean( stopped[[paste0(x, '_male']] [paste(x, '_mode')== i]  #the mean in the summary
-# 			stopped[[ paste0(x, '_mode_sexratio')]][paste(x, '_mode')== i]=  temp.mean 
-# 		                    }
+  for (i in c(1:7,99) ) {
+			temp.mean = mean( stopped[[paste0(x, '_male')]][paste(x, '_mode')== i]  #the mean in the summary
+			stopped[[ paste0(x, '_mode_sexratio')]][paste(x, '_mode')== i]=  temp.mean
+		                    }
 			                }
 
 sel= is.na(stopped$cas_male) & (stopped$random3 <= stopped$cas_mode_sexratio) & !is.na(stopped$cas_severity) 
