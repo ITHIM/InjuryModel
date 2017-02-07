@@ -140,7 +140,7 @@ stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_mode.int, veh_
                                      ped_cas_age ))
 
 # duplicates drop
-stopped1 = stopped1[!duplicated(stopped1),]
+stopped1 = stopped1[!duplicated(stopped1),]   #likely no duplicates
 stopped1$veh_modei = -1 *stopped1$veh_mode.int
 stopped1$veh_modei[stopped1$veh_modei == -99] = 99
 
@@ -149,8 +149,8 @@ stopped1$random1 = runif(n = nrow(stopped1),min = 0, max = 1)
 
 ## another little_n !!   CHECK
 # by accident_index (veh_modei random1), sort: gen littlen=_n
-by_stopped1 <- stopped1 %>% group_by(veh_modei, random1)   # groups by 2 vars
-stopped1 <- mutate(arrange(stopped1, veh_modei, random1),littlen=unlist(lapply(group_size(by_stopped1),FUN=seq_len)))    # sorts by 3 vars->generate index
+by_stopped1 <- stopped1 %>% group_by(accident_index)   # groups by
+stopped1 <- mutate(arrange(stopped1, accident_index, veh_modei, random1),littlen=unlist(lapply(group_size(by_stopped1),FUN=seq_len)))    # sorts by 3 vars->generate index
 
 
 stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mode,
