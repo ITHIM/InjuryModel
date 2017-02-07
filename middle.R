@@ -9,9 +9,10 @@ library(readstata13)
 library(dplyr)
 library(stats)
 
-stopped = read.csv('stopped.csv', header=T)
+# stopped = read.csv('stopped.csv', header=T)
 #stopped = readstata13::read.dta13('stopped.dta')    #only in casestopped object is not downloaded
 #stopped = stopped[, c(1:14)]   # clean odd columns errors
+load('stopped.rda')
 
 stopped = dplyr::rename(stopped,  cas_severity = casualty_severity )
 severitylab=data.frame(cas_severity=c(1,2,3), severitylab=c("Fatal","Serious","Slight"))
@@ -149,13 +150,12 @@ stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mod
 
 # reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
 
-
-for (x in c('reference','mode','male','age') {
-  stopped1= dplyr::rename( paste0('veh_', x, '_firstlarge') = paste0('veh_', x)  )
-			rename veh_`x'2 veh_`x'_secondlarge
+for (x in c('reference','mode','male','age')) {
+#      stopped1 = dplyr::rename(stopped1, paste0('veh_', x, '_firstlarge') = paste0('veh_', x)  )
+#			stopped1 = dplyr::rename(stopped1, paste0('veh_',x,'2')= paste0('veh_',x.'_secondlarge'))
+      names(stopped1)[names(stopped1)==paste0('veh_',x,1)] = paste0('veh_',x,'_firstlarge')
+      names(stopped1)[names(stopped1)==paste0('veh_',x,2)] = paste0('veh_',x,'_secondlarge')
 			}
-
-
 
 #! stopped1 = reshape(data = stopped1,       ********)
 
@@ -179,7 +179,7 @@ stopped1 = subset(stopped1, select =c(accident_index, veh_reference_firstlarge, 
                                     veh_male_secondlarge, veh_age_firstlarge, veh_age_secondlarge)   )
 
 
-write.csv(stopped1, file = './stats19_strikemode.dta')
+write.csv(stopped1, file = './stats19_strikemode.csv')
 
 stopped = inner_join(stopped, stopped1, by="accident_index")
 
