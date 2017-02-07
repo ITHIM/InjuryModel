@@ -72,7 +72,7 @@ stopped$veh_age[stopped$veh_age== -1 ] = NA
 stopped = dplyr::rename(stopped,  veh_reference  = vehicle_reference )
 
 
-## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT    ???  check!!
+## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT    
 stopped$pedflag = NA   
 stopped$pedflag[stopped$cas_mode==1] = 1   # CHECK : 1 if cas_mode=1, 0, otherwise
 stopped$pedflag[stopped$cas_mode!=1] = 0
@@ -90,6 +90,7 @@ names(stopped.gr) = c('accident_index', 'numped')
 stopped= inner_join(stopped, stopped.gr, by="accident_index")
 
 # set seed 2010
+set.seed(2010)
 stopped$random0 = runif(n = nrow(stopped),min = 0, max = 1)
 
 td= stopped
@@ -134,9 +135,10 @@ stopped1 = stopped1[!duplicated(stopped1),]
 stopped1$veh_modei = -1 *stopped1$veh_mode.int
 stopped1$veh_modei[stopped1$veh_modei == -99] = 99
 
+set.seed(2011)
 stopped1$random1 = runif(n = nrow(stopped1),min = 0, max = 1)
 
-## another little_n !!
+## another little_n !!   CHECK
 # by accident_index (veh_modei random1), sort: gen littlen=_n
 by_stopped1 <- stopped1 %>% group_by(veh_modei, random1)   # groups by 2 vars
 stopped1 <- mutate(arrange(stopped1, veh_modei, random1),littlen=unlist(lapply(group_size(by_stopped1),FUN=seq_len)))    # sorts by 3 vars->generate index
@@ -156,7 +158,7 @@ for (x in c('reference','mode','male','age')) {
       names(stopped1)[names(stopped1)==paste0('veh_',x,2)] = paste0('veh_',x,'_secondlarge')
 			}
 
-#! stopped1 = reshape(data = stopped1,       ********)
+
 
 stopped1=rename(.data = stopped1,   veh_mode_firstlarge = veh_mode,
                                   veh_male_firstlarge = veh_male,
@@ -182,34 +184,37 @@ write.csv(stopped1, file = './stats19_strikemode.csv')
 
 stopped = inner_join(stopped, stopped1, by="accident_index")
 
-i= c('mode','male','age')
 
-for (x in i) {
-  stopped[[paste0('strike_', i) ]]= NULL
-  stopped[[paste0('strike_', i) ]][stopped$cas_mode==1] = stopped[[paste0('veh_', i) ]]     #if cas_mode==1
-  stopped[[paste0('strike_', i, '_secondlarge') ]][stopped$veh_reference== stopped$veh_reference_firstlarge
-                                                   & stopped$cas_mode != 1] = stopped[[paste0('veh_', i, '_secondlarge') ]]
+for (x in c('mode','male','age')) {
+
+  stopped[[paste0('strike_', x) ]]= 0
+  stopped[[paste0('strike_', x) ]][stopped$cas_mode==1]    # 1 if cas_mode==1, 0 otherwise
+  
+  stopped[[paste0('strike_', x) ]][stopped$cas_mode==1] = stopped[[paste0('veh_', x,'_firstlarge') ]]     
+  
+  stopped[[paste0('strike_', x) ]][stopped$veh_reference== stopped$veh_reference_firstlarge
+                                  & stopped$cas_mode != 1] = stopped[[paste0('veh_', x, '_secondlarge') ]]
               }  
   
 
-stopped$modelab = stopped$strike_mode
+stopped$modelab = stopped$strike_mode  #check integer/labels OK
 
 #IMPUTE AT RANDOM MISSING SEX OF A) CASUALTY AND B) STRIKER, 
 # IN PROPORTION TO OBSERVED SEX RATIO OF STRIKER COLLISIONS FOR EACH MODE [not done for age]
-
+set.seed(2012)
 stopped$random3 = runif(n = nrow(stopped), min = 0, max = 1)
 table( stopped$cas_male, stopped$miss)   # missing data 0.2% casualty sex
 
 table( stopped$cas_male, stopped$miss) 
-table(stopped$strike_male[stopped$strike_mode!=8] , miss )  # missing data 6.5% striker sex
+table(stopped$strike_male[stopped$strike_mode!=8] , stopped$miss )  # missing data 6.5% striker sex
 
 for (x in c('cas', 'strike')) {
-  stopped[[paste0(x,'_mode_sexratio')]]= NULL
+  stopped[[paste0(x,'_mode_sexratio')]]= NA
 			
-  for (i in c(1:7,99) ) {
-			temp.mean = mean( stopped[[paste0(x, '_male']] [paste(x, '_mode')== i]  #the mean in the summary
-			stopped[[ paste0(x, '_mode_sexratio')]][paste(x, '_mode')== i]=  temp.mean 
-		                    }
+#   for (i in c(1:7,99) ) {
+# 			temp.mean = mean( stopped[[paste0(x, '_male']] [paste(x, '_mode')== i]  #the mean in the summary
+# 			stopped[[ paste0(x, '_mode_sexratio')]][paste(x, '_mode')== i]=  temp.mean 
+# 		                    }
 			                }
 
 sel= is.na(stopped$cas_male) & (stopped$random3 <= stopped$cas_mode_sexratio) & !is.na(stopped$cas_severity) 
