@@ -31,10 +31,8 @@ ssg <- group_by(ss19, cas_mode, cas_severity, strike_mode, roadtype) %>%
   complete(cas_mode, cas_severity, strike_mode, roadtype, fill=list(count=0))
 
 #this is Excel ithim 1 structure
-
-fit <-  glm(count ~  (cas_mode *cas_severity* roadtype* strike_mode), data=ssg, family=poisson)
-      # add predicted count with standard error 
-pred <- predict(fit, se.fit=TRUE, type="response")
-ssg <- mutate(ssg, count_fit=pred[["fit"]], count_se=pred[["se.fit"]])
+fitsat <- glm(count ~ cas_mode*cas_severity*strike_mode*roadtype, data=ssg, family=poisson)
+pred <- predict(fitsat, se.fit=TRUE, type="response")
+ssg <- mutate(ssg, count_fit_sat=pred[["fit"]], count_se_sat=pred[["se.fit"]])
 as.data.frame(ssg)[1:10,]
 
