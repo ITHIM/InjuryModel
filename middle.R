@@ -30,6 +30,7 @@ rm(td)
 names(stopped)[which(names(stopped)=='x1st_road_class')]= 'st_road_class'
 stopped$st_road_class <-  recode(stopped$st_road_class,'1'=1, '2' = 1, '3'=2, '4'=3,'5'=3, '6'=3)    #1 stays unchanged
 
+
 #add column roadtypelab
 roadtypelab=data.frame(st_road_class=c(1,2,3), roadtypelab=c("Motorway/A(M)", "A","B, C, Unclassified"))
 stopped = inner_join(stopped, roadtypelab, by="st_road_class")
@@ -45,15 +46,15 @@ stopped$veh_mode = recode(stopped$vehicle_type,'-1'=99, '1'=2, '2'=3,'3'=3, '4'=
 #keep integer values for stopped1$veh_mode
 stopped$veh_mode.int = stopped$veh_mode 
 
-stopped$cas_mode   = stopped$veh_mode  
-stopped$cas_mode[ stopped$casualty_class==3]   = 1
-stopped$cas_mode[ is.na(stopped$cas_severity)]   = NA
+stopped$cas_mode.int   = stopped$veh_mode.int  
+stopped$cas_mode.int[stopped$casualty_class==3]   = 1
+stopped$cas_mode.int[ is.na(stopped$cas_severity)]   = NA
 
-modelab=data.frame(veh_mode=c(1,2,3,4,5,6,7,8,99), modelab=c("pedestrian","cyclist","motorcycle",
+modelab=data.frame(veh_mode.int=c(1,2,3,4,5,6,7,8,99), modelab=c("pedestrian","cyclist","motorcycle",
                                                     "car/taxi","light goods","bus","heavy goods",
                                                     "No other vehicle","other or unknown"))
 
-stopped = inner_join(stopped, modelab, by='veh_mode')
+stopped = inner_join(stopped, modelab, by='veh_mode.int')
 stopped$modelab = as.character(stopped$modelab)
 
  
@@ -72,14 +73,15 @@ stopped$veh_age[stopped$veh_age== -1 ] = NA
 stopped = dplyr::rename(stopped,  veh_reference  = vehicle_reference )
 
 
-## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT    
-stopped$pedflag = NA   
-stopped$pedflag[stopped$cas_mode==1] = 1   # CHECK : 1 if cas_mode=1, 0, otherwise
-stopped$pedflag[stopped$cas_mode!=1] = 0
-
 ## SELECT A 'STRIKE VEHICLE' PEDESTRIAN AT RANDOM 
 ## (NB ONLY KNOW ABOUT THOSE PEDESTRIANS WHO WERE INJURED...
 ## DON'T NEED TO SPLIT BY VEHICLE AS THIS ONLY BECOMES RELEVANT IF NO OTHER VEHICLE BUT THE PEDESTRIAN)
+
+## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT    
+stopped$pedflag = NA   
+stopped$pedflag[stopped$cas_mode.int==1] = 1   # CHECK : 1 if cas_mode=1, 0, otherwise
+stopped$pedflag[stopped$cas_mode.int!=1] = 0
+
 
 # check: add numped column
 stopped= arrange(stopped, accident_index)
@@ -98,25 +100,25 @@ td= stopped
 ## LITTLE N's
 for (x in c('male', 'age')) {
 
-   by_td <- td %>% group_by(accident_index, cas_mode)   # groups by 2 vars
+   by_td <- td %>% group_by(accident_index, cas_mode.int)   # groups by 2 vars
    vartemp = paste0('littlen_cas', x)
-   td <- mutate(arrange(td,accident_index, cas_mode,random0),vartemp=unlist(lapply(group_size(by_td),FUN=seq_len)))    # sorts by 3 vars->generate index
+   td <- mutate(arrange(td,accident_index, cas_mode.int,random0),vartemp=unlist(lapply(group_size(by_td),FUN=seq_len)))    # sorts by 3 vars->generate index
    
     td[[paste0('littlen_cas', x) ]] = td$vartemp   ; td$vartemp =NULL
    
-		td[[paste0('ped_cas_', x, '_temp') ]] = td[[ paste0('cas_', x) ]]
+		td[[paste0('ped_cas_', x,'_temp') ]] = td[[ paste0('cas_', x) ]]
 		
-		td[[ paste0('ped_cas_', x, '_temp') ]][ td$cas_mode!=1 | td[[paste0('littlen_cas', x) ]]!=1  ] = NA
+		td[[ paste0('ped_cas_', x,'_temp') ]][ td$cas_mode.int!=1 | td[[paste0('littlen_cas', x) ]]!=1  ] = NA
 			
     #replace ped_cas_`x'_temp=. if cas_mode!=1 | littlen_cas`x'!=1  // pedestrian age/sex set as equal to one randomly selected pedestrian within the accident
 		#td[[ paste0('ped_cas_', x, '_temp') ]] 
 		
     #bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
 		td.gr  = aggregate(td[[vartemp]], by = list(td$accident_index), FUN = max)
-		names(td.gr) = c('accident_index', paste0('ped_cas_', x))
+		names(td.gr) = c('accident_index', paste0('ped_cas_', x,'temp'))
 		td  = inner_join(td, td.gr, by= 'accident_index')
 		
-	  td[[paste0('littlen_cas', x)]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
+	  td[[paste0('littlen_cas', x,'_temp')]] = td[[ paste0('ped_cas_', x, '_temp') ]] = NULL
     #drop littlen_cas`x' ped_cas_`x'_temp
 	  
 			}
