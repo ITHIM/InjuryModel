@@ -6,8 +6,8 @@ library(dplyr)
 library(tidyr)
 
 #reading in the data
-ss19<-read.dta13("C:/Users/jw745/Dropbox/z_ITHIMfiles/Stats19/1b_DataCreated/Stats19_05-15_ready_v3.dta")
-ss19<-tbl_df(ss19)
+#ss19<-read.dta13("C:/Users/jw745/Dropbox/z_ITHIMfiles/Stats19/1b_DataCreated/Stats19_05-15_ready_v3.dta")
+ss19<-tbl_df(Stats19)
 ss19<-filter(ss19, strike_mode!='No other vehicle')
 ss19<-ss19[complete.cases(ss19),]
 #adding age bands
