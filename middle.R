@@ -160,13 +160,13 @@ stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mod
 
 # !! reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
 stopped1 = reshape(data = stopped1,v.names = c('veh_reference','veh_mode','veh_male','veh_age'),
-                   idvar = c('accident_index', 'littlen')   ,  direction = "wide")
+                           timevar='littlen' , idvar = c('accident_index')   ,  direction = "wide")
 
 for (x in c('reference','mode','male','age')) {
 #      stopped1 = dplyr::rename(stopped1, paste0('veh_', x, '_firstlarge') = paste0('veh_', x)  )
 #			stopped1 = dplyr::rename(stopped1, paste0('veh_',x,'2')= paste0('veh_',x.'_secondlarge'))
-      names(stopped1)[names(stopped1)==paste0('veh_',x,'1')] = paste0('veh_',x,'_firstlarge')
-      names(stopped1)[names(stopped1)==paste0('veh_',x,'2')] = paste0('veh_',x,'_secondlarge')
+      names(stopped1)[names(stopped1)==paste0('veh_',x,'.1')] = paste0('veh_',x,'_firstlarge')
+      names(stopped1)[names(stopped1)==paste0('veh_',x,'.2')] = paste0('veh_',x,'_secondlarge')
 			}
 
 
@@ -218,16 +218,16 @@ stopped$modelab = stopped$strike_mode  #check integer/labels OK
 # IN PROPORTION TO OBSERVED SEX RATIO OF STRIKER COLLISIONS FOR EACH MODE [not done for age]
 set.seed(2012)
 stopped$random3 = runif(n = nrow(stopped), min = 0, max = 1)
-table( stopped$cas_male, stopped$miss)   # missing data 0.2% casualty sex
+table( stopped$cas_male, useNA = TRUE)   # missing data 0.2% casualty sex
 
-table( stopped$cas_male, stopped$miss) 
-table(stopped$strike_male[stopped$strike_mode!=8] , stopped$miss )  # missing data 6.5% striker sex
+table( stopped$cas_male, useNA = TRUE) 
+table(stopped$strike_male[stopped$strike_mode!=8] , useNA = TRUE )  # missing data 6.5% striker sex
 
 for (x in c('cas', 'strike')) {
   stopped[[paste0(x,'_mode_sexratio')]]= NA
 			
   for (i in c(1:7,99) ) {
-			temp.mean = mean( stopped[[paste0(x, '_male')]][paste(x, '_mode')== i]  #the mean in the summary
+			temp.mean = mean( stopped[[paste0(x, '_male')]][paste(x, '_mode')== i])  #the mean in the summary
 			stopped[[ paste0(x, '_mode_sexratio')]][paste(x, '_mode')== i]=  temp.mean
 		                    }
 			                }
