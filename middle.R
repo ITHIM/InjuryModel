@@ -255,7 +255,7 @@ ncol2= which(names(stopped)=='strike_age')
 stopped = stopped [, c(ncol1:ncol2) ]
 
 for (i in (1:length(names(stopped))))  {
-  names(stopped)[i] = as.char(paste0('var', names(stopped)[i]))
+  names(stopped)[i] = paste0('var', names(stopped)[i])
                             }
 
 write.csv(stopped, './1b_DataCreated/stats19_05-15_ready_v3.csv')
