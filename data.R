@@ -102,8 +102,8 @@ names(Vehicles0515) <- tolower(names(Vehicles0515))
 v1 <- c("accident_index", "local_authority_.district.", "x1st_road_class", "date", "number_of_vehicles")
 v2 <- c("accident_index","vehicle_reference", "vehicle_type", "sex_of_driver", "age_of_driver") 
 v3 <- c("accident_index","vehicle_reference","casualty_reference", "casualty_class", "casualty_severity", "sex_of_casualty", "age_of_casualty")
-av <- merge(Accidents0515[v1], Vehicles0515[v2], by="accident_index")
-avc <- merge(av,Casualties0515[v3],by=c("accident_index","vehicle_reference"))
+av <- merge(Accidents0515[v1], Vehicles0515[v2], by="accident_index",all=TRUE)
+avc <- merge(av,Casualties0515[v3],by=c("accident_index","vehicle_reference"),all=TRUE)
 
 # Drop Wales and Scotland
 stopped <- subset(avc,local_authority_.district.<=699)
