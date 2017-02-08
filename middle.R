@@ -218,10 +218,9 @@ stopped$modelab = stopped$strike_mode  #check integer/labels OK
 # IN PROPORTION TO OBSERVED SEX RATIO OF STRIKER COLLISIONS FOR EACH MODE [not done for age]
 set.seed(2012)
 stopped$random3 = runif(n = nrow(stopped), min = 0, max = 1)
-table( stopped$cas_male, useNA = TRUE)   # missing data 0.2% casualty sex
+table( stopped$cas_male, useNA = "always")   # missing data 0.2% casualty sex
 
-table( stopped$cas_male, useNA = TRUE) 
-table(stopped$strike_male[stopped$strike_mode!=8] , useNA = TRUE )  # missing data 6.5% striker sex
+table(stopped$strike_male[stopped$strike_mode!=8] , useNA = "always" )  # missing data 6.5% striker sex
 
 for (x in c('cas', 'strike')) {
   stopped[[paste0(x,'_mode_sexratio')]]= NA
@@ -245,18 +244,18 @@ sel= is.na(stopped$strike_male) & (stopped$random3 > stopped$cas_mode_sexratio) 
 stopped$strike_male[ sel ] = 0
 
 #SAVE
-stopped = stopped[! is.na(stopped$cas_severity)]
+stopped = stopped[! is.na(stopped$cas_severity),]
 stopped = arrange(stopped, accident_index, year, roadtype, cas_severity, cas_mode,
                   cas_male, cas_age, strike_mode, strike_male, strike_age)
 
 #save a range of columns
-ncol1=which(names(stopped)=='accident_index')
-ncol2=which(names(stopped)=='strike_age')
+ncol1= which(names(stopped)=='accident_index')
+ncol2= which(names(stopped)=='strike_age')
 
 stopped = stopped [, c(ncol1:ncol2) ]
 
-for (i in 1:names(stopped)) {
-  names(stopped)[i]=paste0('var', names(stopped)[i])
+for (i in (1:length(names(stopped))) {
+  names(stopped)[i] = paste0('var', names(stopped)[i])
                             }
 
 write.csv(stopped, './1b_DataCreated/stats19_05-15_ready_v3.csv')
