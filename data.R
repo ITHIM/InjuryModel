@@ -1,5 +1,5 @@
 # 8-2-2017 MRC-Epid JHZ
-# converted from Anna Goodman's Stata code and add Internet capability
+# converted from Anna Goodman's Stata code while adding Internet capability
 
 # DOWNLOAD 2005-2014 AND 2015 DATA FROM https://data.gov.uk/dataset/road-accidents-safety-data. SAVE THESE IN 'Stats19\1a_DataOriginal' FOLDER
 # DOWNLOAD CODEBOOK FROM https://discover.ukdataservice.ac.uk/catalogue?sn=7752
@@ -51,6 +51,9 @@ get.data <- function(is.local=TRUE, local.dir=".")
   c2014 <- read.csv(unz(temp, file2014[2]))
   ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Vehicles_2014.zip",temp)
   v2014 <- read.csv(unz(temp, file2014[1]))
+  names(a2014)[names(a2014)=="ï..Accident_Index"] <- "Accident_Index"
+  names(c2014)[names(c2014)=="ï..Accident_Index"] <- "Accident_Index"
+  names(v2014)[names(v2014)=="ï..Accident_Index"] <- "Accident_Index"
 
   # url2015 contains file2015
   file2015 <- c("Vehicles_2015.csv","Casualties_2015.csv","Accidents_2015.csv")
@@ -75,6 +78,7 @@ get.data <- function(is.local=TRUE, local.dir=".")
     cat(x, "\n")
     in2015 <- read.csv(paste("1a_DataOriginal/",x,"_2015.csv",sep=""))
     in2014 <- read.csv(paste("1a_DataOriginal/",x,"0514.csv",sep=""))
+    names(in2014)[names(in2014)=="ï..Accident_Index"] <- "Accident_Index"
     assign(paste(x,'0515',sep=""), fastmerge(in2014,in2015), envir=.GlobalEnv)
     rm(in2014,in2015)
   }
