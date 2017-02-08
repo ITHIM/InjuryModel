@@ -1,5 +1,5 @@
 # 8-2-2017 MRC-Epid JHZ
-# converted from Anna Goodman's Stata code while adding Internet capability
+# converted from Anna Goodman's Stata code and add Internet capability
 
 # DOWNLOAD 2005-2014 AND 2015 DATA FROM https://data.gov.uk/dataset/road-accidents-safety-data. SAVE THESE IN 'Stats19\1a_DataOriginal' FOLDER
 # DOWNLOAD CODEBOOK FROM https://discover.ukdataservice.ac.uk/catalogue?sn=7752
@@ -10,7 +10,7 @@
 # ***************************	
 # ** MERGE 2005-2014 AND 2015 DATASETS 
 # http://stackoverflow.com/questions/8169323/r-concatenate-two-dataframes
-# the function is effectively dplyr::bind_rows()
+# should be similar to dplyr::bind_rows()
 fastmerge <- function(d1, d2) {
   d1.names <- names(d1)
   d2.names <- names(d2)
@@ -35,7 +35,6 @@ fastmerge <- function(d1, d2) {
 
 get.data <- function(is.local=TRUE, local.dir=".")
 {
-  require(dplyr)
   if(!is.local) {
   # url2014 contains file2014 from 2005-2014
   url2014 <- "http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/Stats19_Data_2005-2014.zip"
@@ -44,29 +43,29 @@ get.data <- function(is.local=TRUE, local.dir=".")
   ## version for 2014 only
   ## file2014 <- paste("DfTRoadSafety_",c("Vehicles_2014.csv","Casualties_2014.csv","Accidents_2014.csv"),sep="")
 
-  t <- tempfile()
-  download.file(url2014,t)
-  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Accidents_2014.zip",t)
-  ## a2014 <- read.csv(unz(t, file2014[3]))
-  a2014 <- read.csv(unz(t, file2014[3]))
-  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Casualties_2014.zip",t)
-  ## c2014 <- read.csv(unz(t2, file2014[2]))
-  c2014 <- read.csv(unz(t, file2014[2]))
-  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Vehicles_2014.zip",t)
-  ## v2014 <- read.csv(unz(t, file2014[1]))
-  v2014 <- read.csv(unz(t, file2014[1]))
+  temp <- tempfile()
+  download.file(url2014,temp)
+  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Accidents_2014.zip",temp)
+  a2014 <- read.csv(unz(temp, file2014[3]))
+  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Casualties_2014.zip",temp)
+  c2014 <- read.csv(unz(temp, file2014[2]))
+  ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Vehicles_2014.zip",temp)
+  v2014 <- read.csv(unz(temp, file2014[1]))
+  names(a2014)[names(a2014)=="ï..Accident_Index"] <- "Accident_Index"
+  names(c2014)[names(c2014)=="ï..Accident_Index"] <- "Accident_Index"
+  names(v2014)[names(v2014)=="ï..Accident_Index"] <- "Accident_Index"
 
   # url2015 contains file2015
   file2015 <- c("Vehicles_2015.csv","Casualties_2015.csv","Accidents_2015.csv")
   url2015 <- "http://data.dft.gov.uk/road-accidents-safety-data/RoadSafetyData_2015.zip"
-  download.file(url2015,t)
-  v2015 <- read.csv(unz(t, file2015[1]))
-  c2015 <- read.csv(unz(t, file2015[2]))
-  a2015 <- read.csv(unz(t, file2015[3]))
-  assign("Accidents0515",bind_rows(a2014,a2015), envir=.GlobalEnv)
-  assign("Casualties0515",bind_rows(c2014,c2015), envir=.GlobalEnv)
-  assign("Vehicles0515",bind_rows(v2014,v2015), envir=.GlobalEnv)
-  unlink(t)
+  download.file(url2015,temp)
+  v2015 <- read.csv(unz(temp, file2015[1]))
+  c2015 <- read.csv(unz(temp, file2015[2]))
+  a2015 <- read.csv(unz(temp, file2015[3]))
+  assign("Accidents0515",fastmerge(a2014,a2015), envir=.GlobalEnv)
+  assign("Casualties0515",fastmerge(c2014,c2015), envir=.GlobalEnv)
+  assign("Vehicles0515",fastmerge(v2014,v2015), envir=.GlobalEnv)
+  unlink(temp)
   rm(v2014,c2014,a2014,v2015,a2015,c2015)
   } else {
     
@@ -79,7 +78,8 @@ get.data <- function(is.local=TRUE, local.dir=".")
     cat(x, "\n")
     in2015 <- read.csv(paste("1a_DataOriginal/",x,"_2015.csv",sep=""))
     in2014 <- read.csv(paste("1a_DataOriginal/",x,"0514.csv",sep=""))
-    assign(paste(x,'0515',sep=""), bind_rows(in2014,in2015), envir=.GlobalEnv)
+    names(in2014)[names(in2014)=="ï..Accident_Index"] <- "Accident_Index"
+    assign(paste(x,'0515',sep=""), fastmerge(in2014,in2015), envir=.GlobalEnv)
     rm(in2014,in2015)
   }
   setwd(wd)
