@@ -198,13 +198,15 @@ stopped = inner_join(stopped, stopped1, by="accident_index")
 
 for (x in c('mode','male','age')) {
 
-  stopped[[paste0('strike_', x) ]]= 0
-  stopped[[paste0('strike_', x) ]][stopped$cas_mode==1] = stopped[[paste0('veh_', x) ]]    # 1 if cas_mode==1, 0 otherwise
+  stopped[[paste0('strike_', x) ]]= NA
+  sel= stopped$cas_mode==1
+  stopped[[paste0('strike_', x) ]][sel] = stopped[[paste0('veh_', x) ]][sel]    # 1 if cas_mode==1, 0 otherwise
   
-  stopped[[paste0('strike_', x) ]][stopped$cas_mode!=1] = stopped[[paste0('veh_', x,'_firstlarge') ]]     
+  sel= stopped$cas_mode!=1
+  stopped[[paste0('strike_', x) ]][sel] = stopped[[paste0('veh_', x,'_firstlarge') ]][sel]     
   
-  stopped[[paste0('strike_', x) ]][stopped$veh_reference== stopped$veh_reference_firstlarge
-                                  & stopped$cas_mode != 1] = stopped[[paste0('veh_', x, '_secondlarge') ]]
+  sel= (stopped$veh_reference== stopped$veh_reference_firstlarge  & stopped$cas_mode != 1)
+  stopped[[paste0('strike_', x) ]][ sel ] = stopped[[paste0('veh_', x, '_secondlarge') ]][sel]
               }  
   
 
