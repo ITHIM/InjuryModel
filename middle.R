@@ -1,5 +1,5 @@
 # carries on processing object: stopped  
-
+rm(list=ls())
 #deletes legacy objects
 rm(Accidents0515,av,avc, Casualties0515,Vehicles0515)
 
@@ -7,6 +7,7 @@ library(stringr)
 library(readstata13)
 library(dplyr)
 library(stats)
+library(tidyr)
 
 stopped = read.csv('stopped.csv', header=T)
 #stopped = readstata13::read.dta13('stopped.dta')    #only in casestopped object is not downloaded
@@ -86,7 +87,6 @@ stopped$pedflag[stopped$cas_mode.int!=1] = 0
 # check: add numped column
 stopped= arrange(stopped, accident_index)
 stopped.gr = aggregate(stopped$pedflag, by =list(stopped$accident_index), FUN=sum, na.rm=T)
-# alternative: dplyr::group_by(.data = stopped, pedflag)
 names(stopped.gr) = c('accident_index', 'numped')
 
 stopped= inner_join(stopped, stopped.gr, by="accident_index")
@@ -131,8 +131,8 @@ for (x in c('male', 'age')) {
 # by=c("accident_index"="accident_index", "date"="date") )
 
 #remove loop intermediate components & collect
-rm(td.gr)
-stopped= td
+rm(td.gr, stopped.gr)
+stopped= td ; rm(td)
 
 ## DEFINE LARGEST AND SECOND LARGEST OTHER VEHICLES, TO BECOME STRIKE VEHICLE
 stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_mode.int, veh_reference,
@@ -158,23 +158,25 @@ stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mod
                                          ped_cas_male, ped_cas_age)   )
 # keep accident_index veh_reference veh_mode veh_male veh_age littlen numped ped_cas_male ped_cas_age  
 
-# reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
+# !! reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
+stopped1 = reshape(data = stopped1, idvar =c('accident_index','littlen'),
+                   varying =  c('veh_reference','veh_mode','veh_male','veh_age'))
 
 for (x in c('reference','mode','male','age')) {
 #      stopped1 = dplyr::rename(stopped1, paste0('veh_', x, '_firstlarge') = paste0('veh_', x)  )
 #			stopped1 = dplyr::rename(stopped1, paste0('veh_',x,'2')= paste0('veh_',x.'_secondlarge'))
-      names(stopped1)[names(stopped1)==paste0('veh_',x,1)] = paste0('veh_',x,'_firstlarge')
-      names(stopped1)[names(stopped1)==paste0('veh_',x,2)] = paste0('veh_',x,'_secondlarge')
+      names(stopped1)[names(stopped1)==paste0('veh_',x,'1')] = paste0('veh_',x,'_firstlarge')
+      names(stopped1)[names(stopped1)==paste0('veh_',x,'2')] = paste0('veh_',x,'_secondlarge')
 			}
 
 
-
-stopped1=rename(.data = stopped1,   veh_mode_firstlarge = veh_mode,
-                                  veh_male_firstlarge = veh_male,
-                                  veh_age_firstlarge = veh_age,
-                                  veh_mode_secondlarge = veh_mode,
-                                  veh_male_secondlarge = veh_male,
-                                  veh_age_secondlarge = veh_age)
+# one n loop
+#stopped1=rename(.data = stopped1,   veh_mode_firstlarge = veh_mode,
+#                                   veh_male_firstlarge = veh_male,
+#                                   veh_age_firstlarge = veh_age,
+#                                   veh_mode_secondlarge = veh_mode,
+#                                   veh_male_secondlarge = veh_male,
+#                                   veh_age_secondlarge = veh_age)
 
 
 stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] =  1
@@ -197,9 +199,9 @@ stopped = inner_join(stopped, stopped1, by="accident_index")
 for (x in c('mode','male','age')) {
 
   stopped[[paste0('strike_', x) ]]= 0
-  stopped[[paste0('strike_', x) ]][stopped$cas_mode==1]    # 1 if cas_mode==1, 0 otherwise
+  stopped[[paste0('strike_', x) ]][stopped$cas_mode==1] = stopped[[paste0('veh_', x) ]]    # 1 if cas_mode==1, 0 otherwise
   
-  stopped[[paste0('strike_', x) ]][stopped$cas_mode==1] = stopped[[paste0('veh_', x,'_firstlarge') ]]     
+  stopped[[paste0('strike_', x) ]][stopped$cas_mode!=1] = stopped[[paste0('veh_', x,'_firstlarge') ]]     
   
   stopped[[paste0('strike_', x) ]][stopped$veh_reference== stopped$veh_reference_firstlarge
                                   & stopped$cas_mode != 1] = stopped[[paste0('veh_', x, '_secondlarge') ]]
