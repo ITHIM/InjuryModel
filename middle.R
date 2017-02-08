@@ -182,9 +182,11 @@ for (x in c('reference','mode','male','age')) {
 stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] =  1
 stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge)] = 8
 
+sel = stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1
+stopped1$veh_male_secondlarge[sel] = stopped1$ped_cas_male[sel]
 
-stopped1$veh_male_secondlarge[stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1] = stopped1$ped_cas_male
-stopped1$veh_age_secondlarge[stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1] = stopped1$ped_cas_age
+sel= stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1
+stopped1$veh_age_secondlarge[sel] = stopped1$ped_cas_age[sel]
 
 stopped1 = subset(stopped1, select =c(accident_index, veh_reference_firstlarge, veh_reference_secondlarge,
                                     veh_mode_firstlarge, veh_mode_secondlarge, veh_male_firstlarge,
