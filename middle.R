@@ -159,8 +159,8 @@ stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mod
 # keep accident_index veh_reference veh_mode veh_male veh_age littlen numped ped_cas_male ped_cas_age  
 
 # !! reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
-stopped1 = reshape(data = stopped1, idvar =c('accident_index','littlen'),
-                   varying =  c('veh_reference','veh_mode','veh_male','veh_age'))
+stopped1 = reshape(data = stopped1,v.names = c('veh_reference','veh_mode','veh_male','veh_age'),
+                   idvar = c('accident_index', 'littlen')   ,  direction = "wide")
 
 for (x in c('reference','mode','male','age')) {
 #      stopped1 = dplyr::rename(stopped1, paste0('veh_', x, '_firstlarge') = paste0('veh_', x)  )
