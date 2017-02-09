@@ -1,16 +1,9 @@
-# 8-2-2017 MRC-Epid JHZ
-# converted from Anna Goodman's Stata code while adding Internet capability
+# 9-2-2017 MRC-Epid JHZ
+# conversion of Anna Goodman's Stata code adding Internet capability
 
-# DOWNLOAD 2005-2014 AND 2015 DATA FROM https://data.gov.uk/dataset/road-accidents-safety-data. SAVE THESE IN 'Stats19\1a_DataOriginal' FOLDER
-# DOWNLOAD CODEBOOK FROM https://discover.ukdataservice.ac.uk/catalogue?sn=7752
-# MAKE AN EMPTY FOLDER '1b_DataCreated', IN WHICH '0-temp'
-
-# ***************************
-# * PREPARE DATASETS
-# ***************************	
-# ** MERGE 2005-2014 AND 2015 DATASETS 
+# function to append files as with dplyr::bind_rows()
 # http://stackoverflow.com/questions/8169323/r-concatenate-two-dataframes
-# should be similar to dplyr::bind_rows()
+
 fastmerge <- function(d1, d2) {
   d1.names <- names(d1)
   d2.names <- names(d2)
@@ -33,6 +26,11 @@ fastmerge <- function(d1, d2) {
   return(rbind(d1, d2))
 }
 
+# ****************************
+# * function To get datasets *
+# ****************************
+# ** MERGE 2005-2014 AND 2015 DATASETS 
+
 get.data <- function(is.local=TRUE, local.dir=".")
 {
   if(!is.local) {
@@ -46,11 +44,12 @@ get.data <- function(is.local=TRUE, local.dir=".")
   temp <- tempfile()
   download.file(url2014,temp)
   ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Accidents_2014.zip",temp)
-  a2014 <- read.csv(unz(temp, file2014[3]))
+  a2014 <<- read.csv(unz(temp, file2014[3]))
   ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Casualties_2014.zip",temp)
-  c2014 <- read.csv(unz(temp, file2014[2]))
+  c2014 <<- read.csv(unz(temp, file2014[2]))
   ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Vehicles_2014.zip",temp)
-  v2014 <- read.csv(unz(temp, file2014[1]))
+  v2014 <<- read.csv(unz(temp, file2014[1]))
+  ### under Windows but not Linux
   names(a2014)[names(a2014)=="ï..Accident_Index"] <- "Accident_Index"
   names(c2014)[names(c2014)=="ï..Accident_Index"] <- "Accident_Index"
   names(v2014)[names(v2014)=="ï..Accident_Index"] <- "Accident_Index"
@@ -59,16 +58,15 @@ get.data <- function(is.local=TRUE, local.dir=".")
   file2015 <- c("Vehicles_2015.csv","Casualties_2015.csv","Accidents_2015.csv")
   url2015 <- "http://data.dft.gov.uk/road-accidents-safety-data/RoadSafetyData_2015.zip"
   download.file(url2015,temp)
-  v2015 <- read.csv(unz(temp, file2015[1]))
-  c2015 <- read.csv(unz(temp, file2015[2]))
-  a2015 <- read.csv(unz(temp, file2015[3]))
+  v2015 <<- read.csv(unz(temp, file2015[1]))
+  c2015 <<- read.csv(unz(temp, file2015[2]))
+  a2015 <<- read.csv(unz(temp, file2015[3]))
   assign("Accidents0515",fastmerge(a2014,a2015), envir=.GlobalEnv)
   assign("Casualties0515",fastmerge(c2014,c2015), envir=.GlobalEnv)
   assign("Vehicles0515",fastmerge(v2014,v2015), envir=.GlobalEnv)
   unlink(temp)
-  rm(v2014,c2014,a2014,v2015,a2015,c2015)
-  } else {
-    
+  } 
+  else {
   # data are downloaded locally
   wd <- getwd()
   setwd(local.dir)
@@ -78,27 +76,38 @@ get.data <- function(is.local=TRUE, local.dir=".")
     cat(x, "\n")
     in2015 <- read.csv(paste("1a_DataOriginal/",x,"_2015.csv",sep=""))
     in2014 <- read.csv(paste("1a_DataOriginal/",x,"0514.csv",sep=""))
+    ### see above
     names(in2014)[names(in2014)=="ï..Accident_Index"] <- "Accident_Index"
     assign(paste(x,'0515',sep=""), fastmerge(in2014,in2015), envir=.GlobalEnv)
-    rm(in2014,in2015)
   }
   setwd(wd)
   }
 }
 
-# downloaded data
-# in current directory
-# get.data()
-# in local.dir
-# get.data(local.dir="z_ITHIMfiles/Stats19")
-# Internet source
+# The URL 
+# https://data.gov.uk/dataset/road-accidents-safety-data. 
+# containing the 2005-2014 and 2015 data, which can be 
+# directly accessed as follows,
+
 get.data(is.local=FALSE)
+
+# rm(v2014,c2014,a2014,v2015,a2015,c2015)
+# For codebook see https://discover.ukdataservice.ac.uk/catalogue?sn=7752
+
+# It is also possible to access pre-downloaded data
+# assumming in 'z_ITHIMFILES/Stats19/1a_DataOriginal'
+# The output is an empty folder '1b_DataCreated', containing '0-temp'
+
+# -- from current directory
+# get.data()
+# -- from local.dir
+# get.data(local.dir="z_ITHIMfiles/Stats19")
 
 names(Accidents0515) <- tolower(names(Accidents0515))
 names(Casualties0515) <- tolower(names(Casualties0515))
 names(Vehicles0515) <- tolower(names(Vehicles0515))
 
-# MERGE 3 DATASETS, KEEPING REQUIRED VARIABLES
+# Merge of three datasets keeping required variables
 v1 <- c("accident_index", "local_authority_.district.", "x1st_road_class", "date", "number_of_vehicles")
 v2 <- c("accident_index","vehicle_reference", "vehicle_type", "sex_of_driver", "age_of_driver") 
 v3 <- c("accident_index","vehicle_reference","casualty_reference", "casualty_class", "casualty_severity", "sex_of_casualty", "age_of_casualty")
