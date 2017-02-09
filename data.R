@@ -51,6 +51,7 @@ get.data <- function(is.local=TRUE, local.dir=".")
   c2014 <<- read.csv(unz(temp, file2014[2]))
   ## download.file("http://data.dft.gov.uk/road-accidents-safety-data/DfTRoadSafety_Vehicles_2014.zip",temp)
   v2014 <<- read.csv(unz(temp, file2014[1]))
+  ### under Windows but not Linux
   names(a2014)[names(a2014)=="ï..Accident_Index"] <- "Accident_Index"
   names(c2014)[names(c2014)=="ï..Accident_Index"] <- "Accident_Index"
   names(v2014)[names(v2014)=="ï..Accident_Index"] <- "Accident_Index"
@@ -77,6 +78,7 @@ get.data <- function(is.local=TRUE, local.dir=".")
     cat(x, "\n")
     in2015 <- read.csv(paste("1a_DataOriginal/",x,"_2015.csv",sep=""))
     in2014 <- read.csv(paste("1a_DataOriginal/",x,"0514.csv",sep=""))
+    ### see above
     names(in2014)[names(in2014)=="ï..Accident_Index"] <- "Accident_Index"
     assign(paste(x,'0515',sep=""), fastmerge(in2014,in2015), envir=.GlobalEnv)
     rm(in2014,in2015)
