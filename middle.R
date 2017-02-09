@@ -200,17 +200,21 @@ stopped = inner_join(stopped, stopped1, by="accident_index")
 
 for (x in c('mode','male','age')) {
 
-  stopped[[paste0('strike_', x) ]]= NA
-  sel= stopped$cas_mode==1
+  stopped[[paste0('strike_', x) ]]= NA   #creates the var
+  sel= stopped$cas_mode.int==1
+  if (x=='mode') {part='.int'
+  } else {part=''}
+  
   stopped[[paste0('strike_', x) ]][sel] = stopped[[paste0('veh_', x) ]][sel]    # 1 if cas_mode==1, 0 otherwise
   
-  sel= stopped$cas_mode!=1
+  sel= stopped$cas_mode.int!=1
   stopped[[paste0('strike_', x) ]][sel] = stopped[[paste0('veh_', x,'_firstlarge') ]][sel]     
   
-  sel= (stopped$veh_reference== stopped$veh_reference_firstlarge  & stopped$cas_mode != 1)
+  sel= (stopped$veh_reference== stopped$veh_reference_firstlarge  & stopped$cas_mode.int!= 1)
   stopped[[paste0('strike_', x) ]][ sel ] = stopped[[paste0('veh_', x, '_secondlarge') ]][sel]
               }  
   
+stopped$strike_mode = recode(stopped$strike_mode, '1'='walk', '2'='cycle', '8'='NOV') 
 
 stopped$modelab = stopped$strike_mode  #check integer/labels OK
 
@@ -253,33 +257,53 @@ ncol1= which(names(stopped)=='accident_index')
 ncol2= which(names(stopped)=='strike_age')
 
 stopped = stopped [, c(ncol1:ncol2) ]
+saveRDS(stopped, './1b_DataCreated/stats19_05-15_ready_v3.Rds')  # input for James conversion
 
-for (i in (1:length(names(stopped))))  {
-  names(stopped)[i] = paste0('var', names(stopped)[i])
-                            }
-
-write.csv(stopped, './1b_DataCreated/stats19_05-15_ready_v3.csv')
-saveRDS(stopped, './1b_DataCreated/stats19_05-15_ready_v3.Rds')
+# for (i in (1:length(names(stopped))))  {
+#   names(stopped)[i] = paste0('var', names(stopped)[i])
+#                             }
+# 
+# write.csv(stopped, './1b_DataCreated/stats19_05-15_ready_v3.csv')
 
 
 # ***************************
 #   * ANALYSIS
 # ***************************
 
-# use "1b_DataCreated\Stats19_05-15_ready.dta", clear
-# recode strike_mode 3=5 5=6 6=3 7=7 8=9 99=8, gen(strike_modecat)
-# recode cas_mode 3=5 5=6 6=3 7=7 8=9 99=8, gen(cas_modecat)
-# label define modecatlab 1 "walk" 2 "cycle" 3 "bus" 4 "car" 5 "mbike" 6 "van" 7 "lorry" 8 "other" 9 "no other vehicle" , modify
-# label values strike_modecat modecatlab
-# label values cas_modecat modecatlab
-# 
-# * CASUALTY PERSPECTIVE (only use pedestrian, cyclist, motorcycle, car/taxi)
+stopped$strike_mode.int = recode(stopped$strike_mode, 'bus'=3,'car/taxi'=4,'cyclist'=2,'heavy goods'=5,
+                                'light goods'= 6,'motorcycle'= 7,'NOV'=8 ,'other or unknown'=9,'walk'=1) 
+                                 
+
+stopped$strike_modecat = recode(stopped$strike_mode.int,  '1'=1, '3'=5, '5'=6, '6'=3, '7'=7, '8'=9, '99'=8)
+
+stopped$cas_mode_cat = recode(stopped$cas_mode.int, '1'='walk','2'='cycle', '3'='bus','4'='car/taxi',
+                              '5'='heavy goods',  '6'='light goods', '7'='motorcycle', '8'='NOV',
+                              '9'='other or unknown' )
+stopped$cas_mode_cat = stopped$cas_mode
+
+
+# recode  + add strike_mode_Cat variable
+modecatlab=data.frame(strike_mode.int=c(1,2,3,4,5,6,7,8,9), modecatlab=c("walk","cycle", "bus", "car","mbike","LGV",
+                          "HGV","other", "NOV" )   )
+
+stopped = inner_join(stopped, modecatlab, by="strike_mode.int")
+
+# recode  + add cas_mode_Cat    variable
+modecatlab=data.frame(cas_mode.int=c(1,2,3,4,5,6,7,8,9), 
+                      modecatlab=c("walk","cycle", "bus", "car","mbike","LGV","HGV","other", "NOV" )   )
+
+stopped = inner_join(stopped, modecatlab, by="cas_mode.int")
+
+
+#these are only crosstabs frequency tables
+
+# CASUALTY PERSPECTIVE (only use pedestrian, cyclist, motorcycle, car/taxi)
 # foreach i in 1 0 {
 #   foreach j in 1 2 3 {
 #     bysort cas_severity: tab cas_modecat strike_modecat if cas_male==`i' & roadtype==`j'
 #   }
 #   }
-#     
+
 #     * STRIKER PERSPECTIVE
 #     foreach i in 1 0 {
 #     foreach j in 1 2 3 {
