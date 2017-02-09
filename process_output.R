@@ -11,3 +11,5 @@ output <- group_by(stats19_0515, cas_mode, cas_severity, strike_mode, roadtype) 
   spread (cas_mode, count)%>%
   arrange(cas_severity, roadtype, strike_mode)
 select(output, one_of(c("cas_severity", "roadtype", "strike_mode","pedestrian", "cyclist", "bus", 'car/taxi', "heavy goods", "light goods", "motorcycle", "other or unknown")))
+output <- as.data.frame(output)
+write.csv(output, file="output.csv", quote=FALSE, row.names=FALSE)
