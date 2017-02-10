@@ -58,7 +58,7 @@ modelab=data.frame(veh_mode.int=c(1,2,3,4,5,6,7,8,99), modelab=c("pedestrian","c
 stopped = inner_join(stopped, modelab, by='veh_mode.int')
 stopped$modelab = as.character(stopped$modelab)
 
- 
+stopped$veh_mode.int = stopped$veh_mode   #preserve numeric
 stopped$veh_mode = stopped$cas_mode = stopped$modelab   #CAUTION: integers replaced by labels !!
 
 stopped$cas_male = recode(stopped$sex_of_casualty, '-1'=NULL,'1' =1, '2'=0)
@@ -97,7 +97,7 @@ stopped$random0 = runif(n = nrow(stopped),min = 0, max = 1)
 
 td= stopped
 
-## LITTLE N's
+## LITTLE N's -- can be run directly on stopped
 for (x in c('male', 'age')) {
 
    by_td <- td %>% group_by(accident_index, cas_mode.int)   # groups by 2 vars
@@ -134,13 +134,14 @@ for (x in c('male', 'age')) {
 rm(td.gr, stopped.gr)
 stopped= td ; rm(td)
 
+##############################################################################
 ## DEFINE LARGEST AND SECOND LARGEST OTHER VEHICLES, TO BECOME STRIKE VEHICLE
 stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_mode.int, veh_reference,
                                      veh_male, veh_age, numped, ped_cas_male,
                                      ped_cas_age ))
 
 # duplicates drop
-stopped1 = stopped1[!duplicated(stopped1),]   #likely no duplicates
+stopped1 = stopped1[!duplicated(stopped1),]   
 stopped1$veh_modei = -1 *stopped1$veh_mode.int
 stopped1$veh_modei[stopped1$veh_modei == -99] = 99
 
@@ -159,24 +160,13 @@ stopped1 = subset(x = stopped1, select = c(accident_index,veh_reference, veh_mod
 # keep accident_index veh_reference veh_mode veh_male veh_age littlen numped ped_cas_male ped_cas_age  
 
 # !! reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
-stopped1 = reshape(data = stopped1,v.names = c('veh_reference','veh_mode','veh_male','veh_age'),
+stopped1 = reshape(data = stopped1, v.names = c('veh_reference','veh_mode','veh_male','veh_age'),
                            timevar='littlen' , idvar = c('accident_index')   ,  direction = "wide")
 
 for (x in c('reference','mode','male','age')) {
-#      stopped1 = dplyr::rename(stopped1, paste0('veh_', x, '_firstlarge') = paste0('veh_', x)  )
-#			stopped1 = dplyr::rename(stopped1, paste0('veh_',x,'2')= paste0('veh_',x.'_secondlarge'))
       names(stopped1)[names(stopped1)==paste0('veh_',x,'.1')] = paste0('veh_',x,'_firstlarge')
       names(stopped1)[names(stopped1)==paste0('veh_',x,'.2')] = paste0('veh_',x,'_secondlarge')
 			}
-
-
-# one n loop
-#stopped1=rename(.data = stopped1,   veh_mode_firstlarge = veh_mode,
-#                                   veh_male_firstlarge = veh_male,
-#                                   veh_age_firstlarge = veh_age,
-#                                   veh_mode_secondlarge = veh_mode,
-#                                   veh_male_secondlarge = veh_male,
-#                                   veh_age_secondlarge = veh_age)
 
 
 stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] =  1
