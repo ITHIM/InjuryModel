@@ -108,3 +108,7 @@ avc <- merge(av,Casualties0515[v3],by=c("accident_index","vehicle_reference"),al
 
 # Drop Wales and Scotland
 stopped <- subset(avc,local_authority_.district.<=699)
+
+av <- merge(Accidents0515, Vehicles0515, by="accident_index",all=TRUE)
+avc <- merge(av,Casualties0515,by=c("accident_index","vehicle_reference"),all=TRUE)
+saveRDS(avc,file="accidents_vehicles_casualties_05-15.rds")
