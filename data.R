@@ -1,5 +1,5 @@
 # 10-2-2017 MRC-Epid JHZ
-# conversion of Anna Goodman's Stata code adding Internet capability
+# conversion of Anna Goodman's Stata code adding direct Internet access
 
 # function to append files as with dplyr::bind_rows()
 # http://stackoverflow.com/questions/8169323/r-concatenate-two-dataframes
@@ -26,10 +26,7 @@ fastmerge <- function(d1, d2) {
   return(rbind(d1, d2))
 }
 
-# ****************************
-# * function To get datasets *
-# ****************************
-# ** MERGE 2005-2014 AND 2015 DATASETS 
+# function To get and merge 2005-2014 with 2015 datasets 
 
 get.data <- function(is.local=TRUE, local.dir=".")
 {
@@ -84,23 +81,18 @@ get.data <- function(is.local=TRUE, local.dir=".")
   }
 }
 
-# The URL 
-# https://data.gov.uk/dataset/road-accidents-safety-data. 
-# containing the 2005-2014 and 2015 data, which can be 
-# directly accessed as follows,
+# The URL https://data.gov.uk/dataset/road-accidents-safety-data contains the 
+# 2005-2014 and 2015 data, which can be directly accessed as follows,
 
 get.data(is.local=FALSE)
 
 # rm(v0514,c0514,a0514,v2015,a2015,c2015)
 # For codebook see https://discover.ukdataservice.ac.uk/catalogue?sn=7752
 
-# It is optional to access pre-downloaded data
-# assumming in 'z_ITHIMFILES/Stats19/1a_DataOriginal'
-# The output is an empty folder '1b_DataCreated', containing '0-temp'
+# Optionally, pre-downloaded data can also be processed, assumming in 
+# 'z_ITHIMFILES/Stats19/1a_DataOriginal' while the output is an empty folder
+# 'z_ITHIMFILES/Stats19/1b_DataCreated' containing '0-temp' subdirectory
 
-# -- from current directory
-# get.data()
-# -- from local.dir
 # get.data(local.dir="z_ITHIMfiles/Stats19")
 
 names(Accidents0515) <- tolower(names(Accidents0515))
