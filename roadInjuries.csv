@@ -1,0 +1,547 @@
+severity,roadType,strikingMode,victimMode,value
+Fatal,Arterial,bus,bus,279
+Fatal,Arterial,bus,car/taxi,103
+Fatal,Arterial,bus,cyclist,2
+Fatal,Arterial,bus,heavy goods,0
+Fatal,Arterial,bus,light goods,4
+Fatal,Arterial,bus,motorcycle,6
+Fatal,Arterial,bus,other or unknown,2
+Fatal,Arterial,car,bus,0
+Fatal,Arterial,car,car/taxi,1685
+Fatal,Arterial,car,cyclist,0
+Fatal,Arterial,car,heavy goods,0
+Fatal,Arterial,car,light goods,0
+Fatal,Arterial,car,motorcycle,0
+Fatal,Arterial,car,other or unknown,0
+Fatal,Arterial,car/taxi,bus,0
+Fatal,Arterial,car/taxi,car/taxi,4885
+Fatal,Arterial,car/taxi,cyclist,59
+Fatal,Arterial,car/taxi,heavy goods,0
+Fatal,Arterial,car/taxi,light goods,0
+Fatal,Arterial,car/taxi,motorcycle,475
+Fatal,Arterial,car/taxi,other or unknown,11
+Fatal,Arterial,cycle,bus,0
+Fatal,Arterial,cycle,car/taxi,0
+Fatal,Arterial,cycle,cyclist,13
+Fatal,Arterial,cycle,heavy goods,0
+Fatal,Arterial,cycle,light goods,0
+Fatal,Arterial,cycle,motorcycle,0
+Fatal,Arterial,cycle,other or unknown,0
+Fatal,Arterial,cyclist,bus,0
+Fatal,Arterial,cyclist,car/taxi,0
+Fatal,Arterial,cyclist,cyclist,550
+Fatal,Arterial,cyclist,heavy goods,0
+Fatal,Arterial,cyclist,light goods,0
+Fatal,Arterial,cyclist,motorcycle,0
+Fatal,Arterial,cyclist,other or unknown,0
+Fatal,Arterial,heavy goods,bus,7
+Fatal,Arterial,heavy goods,car/taxi,331
+Fatal,Arterial,heavy goods,cyclist,6
+Fatal,Arterial,heavy goods,heavy goods,130
+Fatal,Arterial,heavy goods,light goods,36
+Fatal,Arterial,heavy goods,motorcycle,30
+Fatal,Arterial,heavy goods,other or unknown,6
+Fatal,Arterial,HGV,bus,0
+Fatal,Arterial,HGV,car/taxi,0
+Fatal,Arterial,HGV,cyclist,0
+Fatal,Arterial,HGV,heavy goods,362
+Fatal,Arterial,HGV,light goods,0
+Fatal,Arterial,HGV,motorcycle,0
+Fatal,Arterial,HGV,other or unknown,0
+Fatal,Arterial,LGV,bus,0
+Fatal,Arterial,LGV,car/taxi,0
+Fatal,Arterial,LGV,cyclist,0
+Fatal,Arterial,LGV,heavy goods,0
+Fatal,Arterial,LGV,light goods,153
+Fatal,Arterial,LGV,motorcycle,0
+Fatal,Arterial,LGV,other or unknown,0
+Fatal,Arterial,light goods,bus,0
+Fatal,Arterial,light goods,car/taxi,230
+Fatal,Arterial,light goods,cyclist,5
+Fatal,Arterial,light goods,heavy goods,0
+Fatal,Arterial,light goods,light goods,157
+Fatal,Arterial,light goods,motorcycle,35
+Fatal,Arterial,light goods,other or unknown,2
+Fatal,Arterial,mbike,bus,0
+Fatal,Arterial,mbike,car/taxi,0
+Fatal,Arterial,mbike,cyclist,0
+Fatal,Arterial,mbike,heavy goods,0
+Fatal,Arterial,mbike,light goods,0
+Fatal,Arterial,mbike,motorcycle,107
+Fatal,Arterial,mbike,other or unknown,0
+Fatal,Arterial,motorcycle,bus,0
+Fatal,Arterial,motorcycle,car/taxi,0
+Fatal,Arterial,motorcycle,cyclist,7
+Fatal,Arterial,motorcycle,heavy goods,0
+Fatal,Arterial,motorcycle,light goods,0
+Fatal,Arterial,motorcycle,motorcycle,1759
+Fatal,Arterial,motorcycle,other or unknown,1
+Fatal,Arterial,other or unknown,bus,0
+Fatal,Arterial,other or unknown,car/taxi,0
+Fatal,Arterial,other or unknown,cyclist,0
+Fatal,Arterial,other or unknown,heavy goods,0
+Fatal,Arterial,other or unknown,light goods,0
+Fatal,Arterial,other or unknown,motorcycle,0
+Fatal,Arterial,other or unknown,other or unknown,100
+Fatal,Arterial,walk,bus,0
+Fatal,Arterial,walk,car/taxi,0
+Fatal,Arterial,walk,cyclist,0
+Fatal,Arterial,walk,heavy goods,0
+Fatal,Arterial,walk,light goods,0
+Fatal,Arterial,walk,motorcycle,0
+Fatal,Arterial,walk,other or unknown,0
+Fatal,Highway,bus,bus,9
+Fatal,Highway,bus,car/taxi,1
+Fatal,Highway,bus,cyclist,0
+Fatal,Highway,bus,heavy goods,0
+Fatal,Highway,bus,light goods,0
+Fatal,Highway,bus,motorcycle,1
+Fatal,Highway,bus,other or unknown,0
+Fatal,Highway,car,bus,0
+Fatal,Highway,car,car/taxi,112
+Fatal,Highway,car,cyclist,0
+Fatal,Highway,car,heavy goods,0
+Fatal,Highway,car,light goods,0
+Fatal,Highway,car,motorcycle,0
+Fatal,Highway,car,other or unknown,0
+Fatal,Highway,car/taxi,bus,0
+Fatal,Highway,car/taxi,car/taxi,682
+Fatal,Highway,car/taxi,cyclist,0
+Fatal,Highway,car/taxi,heavy goods,0
+Fatal,Highway,car/taxi,light goods,0
+Fatal,Highway,car/taxi,motorcycle,14
+Fatal,Highway,car/taxi,other or unknown,3
+Fatal,Highway,cycle,bus,0
+Fatal,Highway,cycle,car/taxi,0
+Fatal,Highway,cycle,cyclist,0
+Fatal,Highway,cycle,heavy goods,0
+Fatal,Highway,cycle,light goods,0
+Fatal,Highway,cycle,motorcycle,0
+Fatal,Highway,cycle,other or unknown,0
+Fatal,Highway,cyclist,bus,0
+Fatal,Highway,cyclist,car/taxi,0
+Fatal,Highway,cyclist,cyclist,1
+Fatal,Highway,cyclist,heavy goods,0
+Fatal,Highway,cyclist,light goods,0
+Fatal,Highway,cyclist,motorcycle,0
+Fatal,Highway,cyclist,other or unknown,0
+Fatal,Highway,heavy goods,bus,5
+Fatal,Highway,heavy goods,car/taxi,83
+Fatal,Highway,heavy goods,cyclist,0
+Fatal,Highway,heavy goods,heavy goods,132
+Fatal,Highway,heavy goods,light goods,19
+Fatal,Highway,heavy goods,motorcycle,9
+Fatal,Highway,heavy goods,other or unknown,0
+Fatal,Highway,HGV,bus,0
+Fatal,Highway,HGV,car/taxi,0
+Fatal,Highway,HGV,cyclist,0
+Fatal,Highway,HGV,heavy goods,70
+Fatal,Highway,HGV,light goods,0
+Fatal,Highway,HGV,motorcycle,0
+Fatal,Highway,HGV,other or unknown,0
+Fatal,Highway,LGV,bus,0
+Fatal,Highway,LGV,car/taxi,0
+Fatal,Highway,LGV,cyclist,0
+Fatal,Highway,LGV,heavy goods,0
+Fatal,Highway,LGV,light goods,10
+Fatal,Highway,LGV,motorcycle,0
+Fatal,Highway,LGV,other or unknown,0
+Fatal,Highway,light goods,bus,0
+Fatal,Highway,light goods,car/taxi,28
+Fatal,Highway,light goods,cyclist,0
+Fatal,Highway,light goods,heavy goods,0
+Fatal,Highway,light goods,light goods,52
+Fatal,Highway,light goods,motorcycle,2
+Fatal,Highway,light goods,other or unknown,0
+Fatal,Highway,mbike,bus,0
+Fatal,Highway,mbike,car/taxi,0
+Fatal,Highway,mbike,cyclist,0
+Fatal,Highway,mbike,heavy goods,0
+Fatal,Highway,mbike,light goods,0
+Fatal,Highway,mbike,motorcycle,0
+Fatal,Highway,mbike,other or unknown,0
+Fatal,Highway,motorcycle,bus,0
+Fatal,Highway,motorcycle,car/taxi,0
+Fatal,Highway,motorcycle,cyclist,0
+Fatal,Highway,motorcycle,heavy goods,0
+Fatal,Highway,motorcycle,light goods,0
+Fatal,Highway,motorcycle,motorcycle,96
+Fatal,Highway,motorcycle,other or unknown,0
+Fatal,Highway,other or unknown,bus,0
+Fatal,Highway,other or unknown,car/taxi,0
+Fatal,Highway,other or unknown,cyclist,0
+Fatal,Highway,other or unknown,heavy goods,0
+Fatal,Highway,other or unknown,light goods,0
+Fatal,Highway,other or unknown,motorcycle,0
+Fatal,Highway,other or unknown,other or unknown,3
+Fatal,Highway,walk,bus,0
+Fatal,Highway,walk,car/taxi,0
+Fatal,Highway,walk,cyclist,0
+Fatal,Highway,walk,heavy goods,0
+Fatal,Highway,walk,light goods,0
+Fatal,Highway,walk,motorcycle,0
+Fatal,Highway,walk,other or unknown,0
+Fatal,Local,bus,bus,209
+Fatal,Local,bus,car/taxi,55
+Fatal,Local,bus,cyclist,4
+Fatal,Local,bus,heavy goods,0
+Fatal,Local,bus,light goods,1
+Fatal,Local,bus,motorcycle,5
+Fatal,Local,bus,other or unknown,1
+Fatal,Local,car,bus,0
+Fatal,Local,car,car/taxi,1428
+Fatal,Local,car,cyclist,0
+Fatal,Local,car,heavy goods,0
+Fatal,Local,car,light goods,0
+Fatal,Local,car,motorcycle,0
+Fatal,Local,car,other or unknown,0
+Fatal,Local,car/taxi,bus,0
+Fatal,Local,car/taxi,car/taxi,3235
+Fatal,Local,car/taxi,cyclist,34
+Fatal,Local,car/taxi,heavy goods,0
+Fatal,Local,car/taxi,light goods,0
+Fatal,Local,car/taxi,motorcycle,335
+Fatal,Local,car/taxi,other or unknown,10
+Fatal,Local,cycle,bus,0
+Fatal,Local,cycle,car/taxi,0
+Fatal,Local,cycle,cyclist,18
+Fatal,Local,cycle,heavy goods,0
+Fatal,Local,cycle,light goods,0
+Fatal,Local,cycle,motorcycle,0
+Fatal,Local,cycle,other or unknown,0
+Fatal,Local,cyclist,bus,0
+Fatal,Local,cyclist,car/taxi,0
+Fatal,Local,cyclist,cyclist,479
+Fatal,Local,cyclist,heavy goods,0
+Fatal,Local,cyclist,light goods,0
+Fatal,Local,cyclist,motorcycle,0
+Fatal,Local,cyclist,other or unknown,0
+Fatal,Local,heavy goods,bus,0
+Fatal,Local,heavy goods,car/taxi,65
+Fatal,Local,heavy goods,cyclist,1
+Fatal,Local,heavy goods,heavy goods,23
+Fatal,Local,heavy goods,light goods,9
+Fatal,Local,heavy goods,motorcycle,9
+Fatal,Local,heavy goods,other or unknown,2
+Fatal,Local,HGV,bus,0
+Fatal,Local,HGV,car/taxi,0
+Fatal,Local,HGV,cyclist,0
+Fatal,Local,HGV,heavy goods,143
+Fatal,Local,HGV,light goods,0
+Fatal,Local,HGV,motorcycle,0
+Fatal,Local,HGV,other or unknown,0
+Fatal,Local,LGV,bus,0
+Fatal,Local,LGV,car/taxi,0
+Fatal,Local,LGV,cyclist,0
+Fatal,Local,LGV,heavy goods,0
+Fatal,Local,LGV,light goods,170
+Fatal,Local,LGV,motorcycle,0
+Fatal,Local,LGV,other or unknown,0
+Fatal,Local,light goods,bus,0
+Fatal,Local,light goods,car/taxi,108
+Fatal,Local,light goods,cyclist,5
+Fatal,Local,light goods,heavy goods,0
+Fatal,Local,light goods,light goods,82
+Fatal,Local,light goods,motorcycle,15
+Fatal,Local,light goods,other or unknown,0
+Fatal,Local,mbike,bus,0
+Fatal,Local,mbike,car/taxi,0
+Fatal,Local,mbike,cyclist,0
+Fatal,Local,mbike,heavy goods,0
+Fatal,Local,mbike,light goods,0
+Fatal,Local,mbike,motorcycle,61
+Fatal,Local,mbike,other or unknown,0
+Fatal,Local,motorcycle,bus,0
+Fatal,Local,motorcycle,car/taxi,0
+Fatal,Local,motorcycle,cyclist,8
+Fatal,Local,motorcycle,heavy goods,0
+Fatal,Local,motorcycle,light goods,0
+Fatal,Local,motorcycle,motorcycle,1381
+Fatal,Local,motorcycle,other or unknown,2
+Fatal,Local,other or unknown,bus,0
+Fatal,Local,other or unknown,car/taxi,0
+Fatal,Local,other or unknown,cyclist,0
+Fatal,Local,other or unknown,heavy goods,0
+Fatal,Local,other or unknown,light goods,0
+Fatal,Local,other or unknown,motorcycle,0
+Fatal,Local,other or unknown,other or unknown,170
+Fatal,Local,walk,bus,0
+Fatal,Local,walk,car/taxi,0
+Fatal,Local,walk,cyclist,0
+Fatal,Local,walk,heavy goods,0
+Fatal,Local,walk,light goods,0
+Fatal,Local,walk,motorcycle,0
+Fatal,Local,walk,other or unknown,0
+Serious,Arterial,bus,bus,3309
+Serious,Arterial,bus,car/taxi,328
+Serious,Arterial,bus,cyclist,14
+Serious,Arterial,bus,heavy goods,0
+Serious,Arterial,bus,light goods,23
+Serious,Arterial,bus,motorcycle,24
+Serious,Arterial,bus,other or unknown,8
+Serious,Arterial,car,bus,0
+Serious,Arterial,car,car/taxi,16342
+Serious,Arterial,car,cyclist,0
+Serious,Arterial,car,heavy goods,0
+Serious,Arterial,car,light goods,0
+Serious,Arterial,car,motorcycle,0
+Serious,Arterial,car,other or unknown,0
+Serious,Arterial,car/taxi,bus,0
+Serious,Arterial,car/taxi,car/taxi,41587
+Serious,Arterial,car/taxi,cyclist,239
+Serious,Arterial,car/taxi,heavy goods,0
+Serious,Arterial,car/taxi,light goods,0
+Serious,Arterial,car/taxi,motorcycle,2056
+Serious,Arterial,car/taxi,other or unknown,115
+Serious,Arterial,cycle,bus,0
+Serious,Arterial,cycle,car/taxi,0
+Serious,Arterial,cycle,cyclist,338
+Serious,Arterial,cycle,heavy goods,0
+Serious,Arterial,cycle,light goods,0
+Serious,Arterial,cycle,motorcycle,0
+Serious,Arterial,cycle,other or unknown,0
+Serious,Arterial,cyclist,bus,0
+Serious,Arterial,cyclist,car/taxi,0
+Serious,Arterial,cyclist,cyclist,11496
+Serious,Arterial,cyclist,heavy goods,0
+Serious,Arterial,cyclist,light goods,0
+Serious,Arterial,cyclist,motorcycle,0
+Serious,Arterial,cyclist,other or unknown,2
+Serious,Arterial,heavy goods,bus,50
+Serious,Arterial,heavy goods,car/taxi,572
+Serious,Arterial,heavy goods,cyclist,12
+Serious,Arterial,heavy goods,heavy goods,1085
+Serious,Arterial,heavy goods,light goods,86
+Serious,Arterial,heavy goods,motorcycle,25
+Serious,Arterial,heavy goods,other or unknown,24
+Serious,Arterial,HGV,bus,0
+Serious,Arterial,HGV,car/taxi,0
+Serious,Arterial,HGV,cyclist,0
+Serious,Arterial,HGV,heavy goods,660
+Serious,Arterial,HGV,light goods,0
+Serious,Arterial,HGV,motorcycle,0
+Serious,Arterial,HGV,other or unknown,0
+Serious,Arterial,LGV,bus,0
+Serious,Arterial,LGV,car/taxi,0
+Serious,Arterial,LGV,cyclist,0
+Serious,Arterial,LGV,heavy goods,0
+Serious,Arterial,LGV,light goods,1080
+Serious,Arterial,LGV,motorcycle,0
+Serious,Arterial,LGV,other or unknown,0
+Serious,Arterial,light goods,bus,0
+Serious,Arterial,light goods,car/taxi,1217
+Serious,Arterial,light goods,cyclist,15
+Serious,Arterial,light goods,heavy goods,0
+Serious,Arterial,light goods,light goods,1747
+Serious,Arterial,light goods,motorcycle,72
+Serious,Arterial,light goods,other or unknown,16
+Serious,Arterial,mbike,bus,0
+Serious,Arterial,mbike,car/taxi,0
+Serious,Arterial,mbike,cyclist,0
+Serious,Arterial,mbike,heavy goods,0
+Serious,Arterial,mbike,light goods,0
+Serious,Arterial,mbike,motorcycle,1245
+Serious,Arterial,mbike,other or unknown,0
+Serious,Arterial,motorcycle,bus,0
+Serious,Arterial,motorcycle,car/taxi,0
+Serious,Arterial,motorcycle,cyclist,115
+Serious,Arterial,motorcycle,heavy goods,0
+Serious,Arterial,motorcycle,light goods,0
+Serious,Arterial,motorcycle,motorcycle,24148
+Serious,Arterial,motorcycle,other or unknown,8
+Serious,Arterial,other or unknown,bus,0
+Serious,Arterial,other or unknown,car/taxi,0
+Serious,Arterial,other or unknown,cyclist,0
+Serious,Arterial,other or unknown,heavy goods,0
+Serious,Arterial,other or unknown,light goods,0
+Serious,Arterial,other or unknown,motorcycle,0
+Serious,Arterial,other or unknown,other or unknown,652
+Serious,Arterial,walk,bus,0
+Serious,Arterial,walk,car/taxi,1
+Serious,Arterial,walk,cyclist,0
+Serious,Arterial,walk,heavy goods,0
+Serious,Arterial,walk,light goods,0
+Serious,Arterial,walk,motorcycle,0
+Serious,Arterial,walk,other or unknown,0
+Serious,Highway,bus,bus,179
+Serious,Highway,bus,car/taxi,15
+Serious,Highway,bus,cyclist,0
+Serious,Highway,bus,heavy goods,0
+Serious,Highway,bus,light goods,1
+Serious,Highway,bus,motorcycle,0
+Serious,Highway,bus,other or unknown,0
+Serious,Highway,car,bus,0
+Serious,Highway,car,car/taxi,101
+Serious,Highway,car,cyclist,0
+Serious,Highway,car,heavy goods,0
+Serious,Highway,car,light goods,0
+Serious,Highway,car,motorcycle,0
+Serious,Highway,car,other or unknown,0
+Serious,Highway,car/taxi,bus,0
+Serious,Highway,car/taxi,car/taxi,5342
+Serious,Highway,car/taxi,cyclist,0
+Serious,Highway,car/taxi,heavy goods,0
+Serious,Highway,car/taxi,light goods,0
+Serious,Highway,car/taxi,motorcycle,73
+Serious,Highway,car/taxi,other or unknown,8
+Serious,Highway,cycle,bus,0
+Serious,Highway,cycle,car/taxi,0
+Serious,Highway,cycle,cyclist,0
+Serious,Highway,cycle,heavy goods,0
+Serious,Highway,cycle,light goods,0
+Serious,Highway,cycle,motorcycle,0
+Serious,Highway,cycle,other or unknown,0
+Serious,Highway,cyclist,bus,0
+Serious,Highway,cyclist,car/taxi,0
+Serious,Highway,cyclist,cyclist,4
+Serious,Highway,cyclist,heavy goods,0
+Serious,Highway,cyclist,light goods,0
+Serious,Highway,cyclist,motorcycle,0
+Serious,Highway,cyclist,other or unknown,0
+Serious,Highway,heavy goods,bus,32
+Serious,Highway,heavy goods,car/taxi,182
+Serious,Highway,heavy goods,cyclist,0
+Serious,Highway,heavy goods,heavy goods,563
+Serious,Highway,heavy goods,light goods,50
+Serious,Highway,heavy goods,motorcycle,1
+Serious,Highway,heavy goods,other or unknown,8
+Serious,Highway,HGV,bus,0
+Serious,Highway,HGV,car/taxi,0
+Serious,Highway,HGV,cyclist,0
+Serious,Highway,HGV,heavy goods,47
+Serious,Highway,HGV,light goods,0
+Serious,Highway,HGV,motorcycle,0
+Serious,Highway,HGV,other or unknown,0
+Serious,Highway,LGV,bus,0
+Serious,Highway,LGV,car/taxi,0
+Serious,Highway,LGV,cyclist,0
+Serious,Highway,LGV,heavy goods,0
+Serious,Highway,LGV,light goods,11
+Serious,Highway,LGV,motorcycle,0
+Serious,Highway,LGV,other or unknown,0
+Serious,Highway,light goods,bus,0
+Serious,Highway,light goods,car/taxi,160
+Serious,Highway,light goods,cyclist,0
+Serious,Highway,light goods,heavy goods,0
+Serious,Highway,light goods,light goods,406
+Serious,Highway,light goods,motorcycle,2
+Serious,Highway,light goods,other or unknown,4
+Serious,Highway,mbike,bus,0
+Serious,Highway,mbike,car/taxi,0
+Serious,Highway,mbike,cyclist,0
+Serious,Highway,mbike,heavy goods,0
+Serious,Highway,mbike,light goods,0
+Serious,Highway,mbike,motorcycle,1
+Serious,Highway,mbike,other or unknown,0
+Serious,Highway,motorcycle,bus,0
+Serious,Highway,motorcycle,car/taxi,0
+Serious,Highway,motorcycle,cyclist,0
+Serious,Highway,motorcycle,heavy goods,0
+Serious,Highway,motorcycle,light goods,0
+Serious,Highway,motorcycle,motorcycle,1058
+Serious,Highway,motorcycle,other or unknown,0
+Serious,Highway,other or unknown,bus,0
+Serious,Highway,other or unknown,car/taxi,0
+Serious,Highway,other or unknown,cyclist,0
+Serious,Highway,other or unknown,heavy goods,0
+Serious,Highway,other or unknown,light goods,0
+Serious,Highway,other or unknown,motorcycle,0
+Serious,Highway,other or unknown,other or unknown,36
+Serious,Highway,walk,bus,0
+Serious,Highway,walk,car/taxi,0
+Serious,Highway,walk,cyclist,0
+Serious,Highway,walk,heavy goods,0
+Serious,Highway,walk,light goods,0
+Serious,Highway,walk,motorcycle,0
+Serious,Highway,walk,other or unknown,0
+Serious,Local,bus,bus,2981
+Serious,Local,bus,car/taxi,296
+Serious,Local,bus,cyclist,14
+Serious,Local,bus,heavy goods,0
+Serious,Local,bus,light goods,19
+Serious,Local,bus,motorcycle,15
+Serious,Local,bus,other or unknown,2
+Serious,Local,car,bus,0
+Serious,Local,car,car/taxi,26796
+Serious,Local,car,cyclist,0
+Serious,Local,car,heavy goods,0
+Serious,Local,car,light goods,0
+Serious,Local,car,motorcycle,0
+Serious,Local,car,other or unknown,0
+Serious,Local,car/taxi,bus,0
+Serious,Local,car/taxi,car/taxi,39288
+Serious,Local,car/taxi,cyclist,354
+Serious,Local,car/taxi,heavy goods,0
+Serious,Local,car/taxi,light goods,0
+Serious,Local,car/taxi,motorcycle,1811
+Serious,Local,car/taxi,other or unknown,95
+Serious,Local,cycle,bus,0
+Serious,Local,cycle,car/taxi,0
+Serious,Local,cycle,cyclist,426
+Serious,Local,cycle,heavy goods,0
+Serious,Local,cycle,light goods,0
+Serious,Local,cycle,motorcycle,0
+Serious,Local,cycle,other or unknown,0
+Serious,Local,cyclist,bus,0
+Serious,Local,cyclist,car/taxi,0
+Serious,Local,cyclist,cyclist,15808
+Serious,Local,cyclist,heavy goods,0
+Serious,Local,cyclist,light goods,0
+Serious,Local,cyclist,motorcycle,0
+Serious,Local,cyclist,other or unknown,4
+Serious,Local,heavy goods,bus,10
+Serious,Local,heavy goods,car/taxi,202
+Serious,Local,heavy goods,cyclist,7
+Serious,Local,heavy goods,heavy goods,379
+Serious,Local,heavy goods,light goods,39
+Serious,Local,heavy goods,motorcycle,14
+Serious,Local,heavy goods,other or unknown,2
+Serious,Local,HGV,bus,0
+Serious,Local,HGV,car/taxi,0
+Serious,Local,HGV,cyclist,0
+Serious,Local,HGV,heavy goods,549
+Serious,Local,HGV,light goods,0
+Serious,Local,HGV,motorcycle,0
+Serious,Local,HGV,other or unknown,0
+Serious,Local,LGV,bus,0
+Serious,Local,LGV,car/taxi,0
+Serious,Local,LGV,cyclist,0
+Serious,Local,LGV,heavy goods,0
+Serious,Local,LGV,light goods,1788
+Serious,Local,LGV,motorcycle,0
+Serious,Local,LGV,other or unknown,0
+Serious,Local,light goods,bus,0
+Serious,Local,light goods,car/taxi,734
+Serious,Local,light goods,cyclist,10
+Serious,Local,light goods,heavy goods,0
+Serious,Local,light goods,light goods,1289
+Serious,Local,light goods,motorcycle,66
+Serious,Local,light goods,other or unknown,9
+Serious,Local,mbike,bus,0
+Serious,Local,mbike,car/taxi,0
+Serious,Local,mbike,cyclist,0
+Serious,Local,mbike,heavy goods,0
+Serious,Local,mbike,light goods,0
+Serious,Local,mbike,motorcycle,942
+Serious,Local,mbike,other or unknown,0
+Serious,Local,motorcycle,bus,0
+Serious,Local,motorcycle,car/taxi,0
+Serious,Local,motorcycle,cyclist,82
+Serious,Local,motorcycle,heavy goods,0
+Serious,Local,motorcycle,light goods,0
+Serious,Local,motorcycle,motorcycle,23677
+Serious,Local,motorcycle,other or unknown,15
+Serious,Local,other or unknown,bus,0
+Serious,Local,other or unknown,car/taxi,0
+Serious,Local,other or unknown,cyclist,0
+Serious,Local,other or unknown,heavy goods,0
+Serious,Local,other or unknown,light goods,0
+Serious,Local,other or unknown,motorcycle,0
+Serious,Local,other or unknown,other or unknown,1478
+Serious,Local,walk,bus,0
+Serious,Local,walk,car/taxi,0
+Serious,Local,walk,cyclist,0
+Serious,Local,walk,heavy goods,0
+Serious,Local,walk,light goods,0
+Serious,Local,walk,motorcycle,0
+Serious,Local,walk,other or unknown,0
