@@ -1,6 +1,6 @@
 # carries on processing object: stopped  
 
-#deletes legacy objects
+#deletes legacy objects / rm(list=ls())
 rm(Accidents0515,av,avc, Casualties0515,Vehicles0515)
 
 library(stringr)
@@ -10,12 +10,12 @@ library(stats)
 library(tidyr)
 
 load('stopped.rda')
-#stopped = stopped[, c(1:14)]   # clean odd columns errors
+stopped = stopped[, c(1:14)]   # clean odd columns errors
 
 # PREPARE VARIABLES
 stopped = dplyr::rename(stopped,  cas_severity = casualty_severity )
 stopped$cas_severity = recode(stopped$cas_severity, '1'="Fatal",'2'="Serious", '3'="Slight")
-stopped= stopped[! is.na(stopped$cas_severity),  ]
+stopped= stopped[! is.na(stopped$cas_severity),  ]   # delete indefined severity
 
 # DATE
 td = str_split(string = stopped$date,pattern = "/",n = 3, simplify = TRUE)
@@ -23,8 +23,8 @@ stopped$year = td[,3]
 rm(td)
 
 # rename ROAD CLASS
-stopped$roadtype =  recode(stopped$st_road_class,'1'=1,'2' = 1, '3'=2, '4'=3,'5'=3, '6'=3) #1 unchanged
-stopped$roadtype = recode(stopped$roadtype, '1'="Motorway/A(M)", '2'="A", '3'="B, C, Unclassified") 
+stopped$st_road_class =  recode(stopped$st_road_class,'1'=1,'2' = 1, '3'=2, '4'=3,'5'=3, '6'=3) #1 unchanged
+stopped$roadtype = recode(stopped$st_road_class, '1'="Motorway/A(M)", '2'="A", '3'="B, C, Unclassified") 
 
 # MODE AND SEX OF VEHICLE AND CASUALTY
 stopped$veh_mode = recode(stopped$vehicle_type,'-1'=99, '1'=2, '2'=3,'3'=3, '4'=3, '5'=3, '8'=4, '9'=4,
@@ -42,7 +42,9 @@ stopped$veh_mode = recode(stopped$veh_mode.int, '1'="pedestrian",'2' ="cyclist",
                                     '4'="car/taxi",'5'="light goods",'6'="bus",'7'="heavy goods",
                                     '8' = "NOV", '99' ="other or unknown")
 
-stopped$cas_mode = stopped$veh_mode  # labels in these vars; integers in *.int vars
+stopped$cas_mode = recode(stopped$cas_mode.int, '1'="pedestrian",'2' ="cyclist",'3'="motorcycle",
+                                '4'="car/taxi",'5'="light goods",'6'="bus",'7'="heavy goods",
+                                '8' = "NOV", '99' ="other or unknown")
 
 #sex of casualty
 stopped$cas_male = recode(stopped$sex_of_casualty, '-1'=NULL,'1' =1, '2'=0)
@@ -79,14 +81,15 @@ stopped= inner_join(stopped, stopped.gr, by="accident_index")
 set.seed(2010)
 stopped$random0 = runif(n = nrow(stopped),min = 0, max = 1)
 
+#used in next loop
+by_stopped <- stopped %>% group_by(accident_index, cas_mode.int)   # groups by 2 vars
 
 ## LITTLE N's 
 for (x in c('male', 'age')) {
 
-   by_stopped <- stopped %>% group_by(accident_index, cas_mode.int)   # groups by 2 vars
-   
    # sorts by 3 vars->generate little_n's, delete intermediate var
-   stopped <- mutate(arrange(stopped,accident_index, cas_mode.int,random0),vartemp=unlist(lapply(group_size(by_stopped),FUN=seq_len)))
+   stopped <- mutate(arrange(stopped,accident_index, cas_mode.int, random0),
+                     vartemp=unlist(lapply(group_size(by_stopped),FUN=seq_len)))
    stopped[[paste0('littlen_cas', x) ]] = stopped$vartemp   ; stopped$vartemp =NULL
 
    #pedestrians= casualties hurt in mode=1    
@@ -97,7 +100,8 @@ for (x in c('male', 'age')) {
 			
    #bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
 		vartemp = paste0('ped_cas_', x)
-		stopped.gr  = aggregate(stopped[[vartemp]], by = list(stopped$accident_index), FUN = max)
+		stopped.gr  = aggregate(stopped[[vartemp]], by = list(stopped$accident_index), 
+		                        FUN = max)
 		names(stopped.gr) = c('accident_index', paste0('ped_cas_', x,'_max'))
 		stopped  = inner_join(stopped, stopped.gr, by= 'accident_index')
 		
@@ -119,7 +123,7 @@ saveRDS(stopped, 'stopped.Rds')   #save for testing
 #use stopped1 to merge later
 stopped1 = subset(stopped, select = c(accident_index,veh_mode,veh_mode.int, 
                                       veh_reference, veh_male, veh_age, numped,
-                                     ped_cas_male, ped_cas_age ))
+                                      ped_cas_male, ped_cas_age ))
 
 # duplicates drop
 stopped1 = stopped1[!duplicated(stopped1),]   
@@ -136,7 +140,7 @@ stopped1 <- mutate(arrange(stopped1, accident_index, veh_modei, random1),
 
 
 # keep accident_index veh_reference veh_mode veh_male veh_age littlen numped ped_cas_male ped_cas_age  
-stopped1 = subset(x = stopped1, select = c(accident_index, veh_reference, veh_mode, veh_mode.int, 
+stopped1 = subset(x = stopped1, select = c(accident_index, veh_reference, veh_mode, 
                                            veh_male, veh_age, littlen, numped, 
                                            ped_cas_male, ped_cas_age)   )
 
@@ -152,8 +156,8 @@ for (x in c('reference','mode','male','age')) {
 			}
 
 
-stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] =  'walk'
-stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge)] = 'other or unknown'
+stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] =  'walk' #1 in Stata
+stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge)] = 'NOV'
 
 #replace values for age/male second large vehicle
 sel = (stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1)
@@ -195,7 +199,7 @@ for (x in c('mode','male','age')) {
 #recode as labels
 stopped$strike_mode.int = recode(stopped$strike_mode, '1'="walk",'2'="cyclist" ,'3'="motorcycle",
                                                   '4'="car/taxi", '5'="light goods",'6'="bus",
-                                                  '7'="heavy goods",'8'="No other vehicle",
+                                                  '7'="heavy goods",'8'="NOV",
                                                   '99'="other or unknown")
 
 #IMPUTE AT RANDOM MISSING SEX OF A) CASUALTY AND B) STRIKER, 
@@ -252,7 +256,7 @@ stopped$strike_modecat = recode(stopped$strike_mode.int, '3' =5, '5'=6, '6'=3,'8
 stopped$cas_mode_cat = recode(stopped$cas_mode.int, '3' =5, '5'=6, '6'=3,'8'=9, '99'=8 )
 
 
-# recode  + add strike_mode_Cat labels var
+# recode  + add strike_mode_Cat labels var (this category does NOT MATCH previous ones)
 stopped$modecatlab=recode(stopped$strike_modecat, "1"="walk","2"="cycle", "3"="bus",
                                               "4" = "car","5"= "mbike","6"= "van",
                                               "7"= "lorry","8"= "other", "9"="NOV" )  
