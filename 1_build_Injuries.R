@@ -15,10 +15,9 @@ stopped = stopped[, c(1:14)]   # clean odd columns errors
 # PREPARE VARIABLES
 stopped = dplyr::rename(stopped,  cas_severity = casualty_severity )
 stopped$cas_severity = recode(stopped$cas_severity, '1'="Fatal",'2'="Serious", '3'="Slight")
-stopped= stopped[! is.na(stopped$cas_severity),  ]   # delete indefined severity
 
 # DATE
-td = str_split(string = stopped$date,pattern = "/",n = 3, simplify = TRUE)
+td = str_split(string = stopped$date, pattern = "/",n = 3, simplify = TRUE)
 stopped$year = td[,3]
 rm(td)
 
@@ -66,11 +65,11 @@ stopped = dplyr::rename(stopped,  veh_reference  = vehicle_reference )
 ## (NB ONLY KNOW ABOUT THOSE PEDESTRIANS WHO WERE INJURED...
 ## DON'T NEED TO SPLIT BY VEHICLE AS THIS ONLY BECOMES RELEVANT IF NO OTHER VEHICLE BUT THE PEDESTRIAN)
 
-## NUMBER OF PEDESTRIANS, OF EACH SEX, IN ACCIDENT    
+## NO. OF PEDESTRIANS IN ACCIDENT    
 stopped$pedflag = 0   
 stopped$pedflag[stopped$cas_mode.int==1] = 1   #  1 if cas_mode=1 | 0: otherwise
 
-# check: add numped column
+# add "numped" column
 stopped= arrange(stopped, accident_index)
 stopped.gr = aggregate(stopped$pedflag, by =list(stopped$accident_index), FUN=sum, na.rm=T)
 names(stopped.gr) = c('accident_index', 'numped')
@@ -79,7 +78,7 @@ stopped= inner_join(stopped, stopped.gr, by="accident_index")
 
 # set seed 2010
 set.seed(2010)
-stopped$random0 = runif(n = nrow(stopped),min = 0, max = 1)
+stopped$random0 = runif(n = nrow(stopped), min = 0, max = 1)
 
 #used in next loop
 by_stopped <- stopped %>% group_by(accident_index, cas_mode.int)   # groups by 2 vars
@@ -89,7 +88,7 @@ for (x in c('male', 'age')) {
 
    # sorts by 3 vars->generate little_n's, delete intermediate var
    stopped <- mutate(arrange(stopped,accident_index, cas_mode.int, random0),
-                     vartemp=unlist(lapply(group_size(by_stopped),FUN=seq_len)))
+                     vartemp=unlist(lapply(group_size(by_stopped), FUN=seq_len)))
    stopped[[paste0('littlen_cas', x) ]] = stopped$vartemp   ; stopped$vartemp =NULL
 
    #pedestrians= casualties hurt in mode=1    
@@ -100,6 +99,7 @@ for (x in c('male', 'age')) {
 			
    #bysort accident_index: egen ped_cas_`x'=max(ped_cas_`x'_temp)
 		vartemp = paste0('ped_cas_', x)
+		stopped[[vartemp]][is.na(stopped[[vartemp]])] = 0 #allow grouping for NAs
 		stopped.gr  = aggregate(stopped[[vartemp]], by = list(stopped$accident_index), 
 		                        FUN = max)
 		names(stopped.gr) = c('accident_index', paste0('ped_cas_', x,'_max'))
@@ -131,12 +131,12 @@ stopped1$veh_modei = -1 *stopped1$veh_mode.int
 stopped1$veh_modei[stopped1$veh_modei == -99] = 99
 
 set.seed(2011)
-stopped1$random1 = runif(n = nrow(stopped1),min = 0, max = 1)
+stopped1$random1 = runif(n = nrow(stopped1), min = 0, max = 1)
 
 # by accident_index (veh_modei random1), sort: gen littlen=_n
 by_stopped1 <- stopped1 %>% group_by(accident_index)   # groups by
 stopped1 <- mutate(arrange(stopped1, accident_index, veh_modei, random1),
-                   littlen=unlist(lapply(group_size(by_stopped1),FUN=seq_len)))
+                   littlen=unlist(lapply(group_size(by_stopped1), FUN= seq_len)))
 
 
 # keep accident_index veh_reference veh_mode veh_male veh_age littlen numped ped_cas_male ped_cas_age  
@@ -147,7 +147,7 @@ stopped1 = subset(x = stopped1, select = c(accident_index, veh_reference, veh_mo
 
 # !! reshape wide veh_reference veh_mode veh_male veh_age, i(accident_index) j(littlen)
 stopped1 = reshape(data = stopped1, v.names = c('veh_reference','veh_mode','veh_male','veh_age'),
-                           timevar='littlen' , idvar = c('accident_index')   ,  direction = "wide")
+                           timevar='littlen' , idvar = c('accident_index'),  direction = "wide")
 
 
 for (x in c('reference','mode','male','age')) {
@@ -156,7 +156,7 @@ for (x in c('reference','mode','male','age')) {
 			}
 
 
-stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] =  'walk' #1 in Stata
+stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] #  'walk' #1 in Stata
 stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge)] = 'NOV'
 
 #replace values for age/male second large vehicle
@@ -175,6 +175,8 @@ write.csv(stopped1, file = './stats19_strikemode.csv')
 stopped = inner_join(stopped, stopped1, by="accident_index")
 rm(stopped1)
 
+# prepare vars for loop
+stopped= stopped[! is.na(stopped$cas_severity),  ]   # delete undefined severity
 stopped$veh_mode = stopped$veh_mode.int
 
 #output: 3 strike* vars w. integers categories
@@ -191,16 +193,15 @@ for (x in c('mode','male','age')) {
   stopped[[paste0('strike_', x) ]][sel] = stopped[[paste0('veh_', x,'_firstlarge') ]][sel]     
   
   sel= (stopped$veh_reference== stopped$veh_reference_firstlarge  & stopped$cas_mode.int!= 1)
-  sel[is.na(sel)]=0
   stopped[[paste0('strike_', x) ]][ sel ] = stopped[[paste0('veh_', x, '_secondlarge') ]][sel]
                       
                               }  
 
-#recode as labels
-stopped$strike_mode.int = recode(stopped$strike_mode, '1'="walk",'2'="cyclist" ,'3'="motorcycle",
-                                                  '4'="car/taxi", '5'="light goods",'6'="bus",
-                                                  '7'="heavy goods",'8'="NOV",
-                                                  '99'="other or unknown")
+#recode as integers
+stopped$strike_mode.int = recode(stopped$strike_mode, "walk"='1', "cyclist"='2' , "motorcycle"='3',
+                                                  "car/taxi"='4', "light goods"='5', "bus"='6',
+                                                  "heavy goods"='7', "NOV"= '8',
+                                                  "other or unknown" = '99')
 
 #IMPUTE AT RANDOM MISSING SEX OF A) CASUALTY AND B) STRIKER, 
 # IN PROPORTION TO OBSERVED SEX RATIO OF STRIKER COLLISIONS FOR EACH MODE [not done for age]

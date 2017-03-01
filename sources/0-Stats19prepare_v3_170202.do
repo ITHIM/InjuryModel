@@ -1,6 +1,6 @@
 clear
 clear matrix
-cd "C:\Users\Anna Goodman\Dropbox\z_ITHIMfiles\Stats19"
+cd "C:\Temp\Anna Goodman\Dropbox\z_ITHIMfiles\Stats19"
 
 	** DOWNLOAD 2005-2014 AND 2015 DATA FROM https://data.gov.uk/dataset/road-accidents-safety-data. SAVE THESE IN 'Stats19\1a_DataOriginal' FOLDER
 	** DOWNLOAD CODEBOOK FROM https://discover.ukdataservice.ac.uk/catalogue?sn=7752
