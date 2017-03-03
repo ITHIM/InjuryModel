@@ -156,11 +156,11 @@ for (x in c('reference','mode','male','age')) {
 			}
 
 
-stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ] #  'walk' #1 in Stata
+stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge) & stopped1$numped!= 0 ]= 'pedestrian'  # 
 stopped1$veh_mode_secondlarge[is.na(stopped1$veh_mode_secondlarge)] = 'NOV'
 
 #replace values for age/male second large vehicle
-sel = (stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 1)
+sel = (stopped1$numped!=0 & stopped1$veh_mode_secondlarge == 'pedestrian')
 stopped1$veh_male_secondlarge[sel] = stopped1$ped_cas_male[sel]
 stopped1$veh_age_secondlarge[sel] = stopped1$ped_cas_age[sel]
 
@@ -177,15 +177,15 @@ rm(stopped1)
 
 # prepare vars for loop
 stopped= stopped[! is.na(stopped$cas_severity),  ]   # delete undefined severity
-stopped$veh_mode = stopped$veh_mode.int
+stopped$veh_mode_firstlarge = as.character(stopped$veh_mode_firstlarge)
+stopped$veh_mode_secondlarge = as.character(stopped$veh_mode_secondlarge)
 
 #output: 3 strike* vars w. integers categories
 for (x in c('mode','male','age')) {
 
-  stopped[[paste0('strike_', x) ]]= NA   #creates the vars
+  stopped[[paste0('strike_', x) ]]= '0'   #creates the vars (char type imposed by factors treatment)
 
   sel= (stopped$cas_mode.int==1)
-  stopped[[paste0('strike_', x) ]][!sel] = 0
   stopped[[paste0('strike_', x) ]][sel] = stopped[[paste0('veh_', x) ]][sel]    # 1 if cas_mode.int==1, 0 otherwise
   
   
@@ -198,10 +198,12 @@ for (x in c('mode','male','age')) {
                               }  
 
 #recode as integers
-stopped$strike_mode.int = recode(stopped$strike_mode, "walk"='1', "cyclist"='2' , "motorcycle"='3',
-                                                  "car/taxi"='4', "light goods"='5', "bus"='6',
-                                                  "heavy goods"='7', "NOV"= '8',
-                                                  "other or unknown" = '99')
+stopped$strike_male = as.numeric(stopped$strike_male)
+stopped$strike_age = as.numeric(stopped$strike_age)
+stopped$strike_mode.int = recode(stopped$strike_mode, "pedestrian"='1', "cyclist"='2' , "motorcycle"='3',
+                                 "car/taxi"='4', "light goods"='5', "bus"='6',
+                                 "heavy goods"='7', "NOV"= '8',
+                                 "other or unknown" = '99')
 
 #IMPUTE AT RANDOM MISSING SEX OF A) CASUALTY AND B) STRIKER, 
 # IN PROPORTION TO OBSERVED SEX RATIO OF STRIKER COLLISIONS FOR EACH MODE [not done for age]
@@ -209,7 +211,7 @@ set.seed(2012)
 stopped$random3 = runif(n = nrow(stopped), min = 0, max = 1)
 table(stopped$cas_male, useNA = "always")   # missing data 0.2% casualty sex
 
-table(stopped$strike_male[stopped$strike_mode!=8] , useNA = "always" )  # missing data 6.5% striker sex
+table(stopped$strike_male[stopped$strike_mode.int!=8] , useNA = "always" )  # missing data 6.5% striker sex
 
 
 #to allow means to work operates on the .int variable
@@ -218,7 +220,7 @@ for (x in c('cas', 'strike')) {
 			
   for (i in c(1:7,99) ) {
       sel= (stopped[[paste0(x, '_mode.int')]]==i)
-			temp.mean = mean( stopped[[paste0(x, '_male')]][sel], na.rm = T)  #the mean in the summary
+			temp.mean = mean( stopped[[paste0(x, '_male') ]][sel], na.rm = T)  #the mean in the summary
 			stopped[[ paste0(x, '_mode_sexratio')]][sel]=  temp.mean
 		                    }
 			                }
@@ -244,7 +246,7 @@ stopped = arrange(stopped, accident_index, year, roadtype, cas_severity, cas_mod
 # ncol2= which(names(stopped)=='strike_age')
 # stopped = stopped [, c(ncol1:ncol2) ]
 
-saveRDS(stopped, './1b_DataCreated/stats19_05-15_ready_v3.Rds')  # input for James conversion
+saveRDS(stopped, './1b_DataCreated/stats19_05-15_ready_v3.Rds')  # input for ITHIM conversion
 
 
 # ***************************

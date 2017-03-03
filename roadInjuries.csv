@@ -1,337 +1,337 @@
 severity,roadType,strikingMode,victimMode,value
 Fatal,Arterial,bus,bus,1
-Fatal,Arterial,bus,car/taxi,150
-Fatal,Arterial,bus,cyclist,29
-Fatal,Arterial,bus,heavy goods,1
-Fatal,Arterial,bus,light goods,6
-Fatal,Arterial,bus,motorcycle,52
+Fatal,Arterial,bus,car,150
+Fatal,Arterial,bus,cycle,29
+Fatal,Arterial,bus,HGV,1
+Fatal,Arterial,bus,LGV,6
+Fatal,Arterial,bus,mbike,52
 Fatal,Arterial,bus,NOV,3
-Fatal,Arterial,bus,pedestrian,213
-Fatal,Arterial,car/taxi,bus,23
-Fatal,Arterial,car/taxi,car/taxi,2350
-Fatal,Arterial,car/taxi,cyclist,332
-Fatal,Arterial,car/taxi,heavy goods,15
-Fatal,Arterial,car/taxi,light goods,36
-Fatal,Arterial,car/taxi,motorcycle,1197
-Fatal,Arterial,car/taxi,NOV,34
-Fatal,Arterial,car/taxi,pedestrian,1685
-Fatal,Arterial,cyclist,bus,0
-Fatal,Arterial,cyclist,car/taxi,2
-Fatal,Arterial,cyclist,cyclist,3
-Fatal,Arterial,cyclist,heavy goods,1
-Fatal,Arterial,cyclist,light goods,0
-Fatal,Arterial,cyclist,motorcycle,2
-Fatal,Arterial,cyclist,NOV,0
-Fatal,Arterial,cyclist,pedestrian,13
-Fatal,Arterial,heavy goods,bus,12
-Fatal,Arterial,heavy goods,car/taxi,946
-Fatal,Arterial,heavy goods,cyclist,169
-Fatal,Arterial,heavy goods,heavy goods,60
-Fatal,Arterial,heavy goods,light goods,74
-Fatal,Arterial,heavy goods,motorcycle,235
-Fatal,Arterial,heavy goods,NOV,18
-Fatal,Arterial,heavy goods,pedestrian,362
-Fatal,Arterial,light goods,bus,0
-Fatal,Arterial,light goods,car/taxi,354
-Fatal,Arterial,light goods,cyclist,45
-Fatal,Arterial,light goods,heavy goods,3
-Fatal,Arterial,light goods,light goods,17
-Fatal,Arterial,light goods,motorcycle,190
-Fatal,Arterial,light goods,NOV,5
-Fatal,Arterial,light goods,pedestrian,153
-Fatal,Arterial,motorcycle,bus,0
-Fatal,Arterial,motorcycle,car/taxi,25
-Fatal,Arterial,motorcycle,cyclist,9
-Fatal,Arterial,motorcycle,heavy goods,0
-Fatal,Arterial,motorcycle,light goods,0
-Fatal,Arterial,motorcycle,motorcycle,62
-Fatal,Arterial,motorcycle,NOV,1
-Fatal,Arterial,motorcycle,pedestrian,107
-Fatal,Arterial,NOV,bus,36
-Fatal,Arterial,NOV,car/taxi,1669
-Fatal,Arterial,NOV,cyclist,18
-Fatal,Arterial,NOV,heavy goods,47
-Fatal,Arterial,NOV,light goods,60
-Fatal,Arterial,NOV,motorcycle,501
-Fatal,Arterial,NOV,NOV,15
-Fatal,Arterial,NOV,pedestrian,0
+Fatal,Arterial,bus,walk,213
+Fatal,Arterial,car,bus,23
+Fatal,Arterial,car,car,2350
+Fatal,Arterial,car,cycle,332
+Fatal,Arterial,car,HGV,15
+Fatal,Arterial,car,LGV,36
+Fatal,Arterial,car,mbike,1197
+Fatal,Arterial,car,NOV,34
+Fatal,Arterial,car,walk,1685
+Fatal,Arterial,cycle,bus,0
+Fatal,Arterial,cycle,car,2
+Fatal,Arterial,cycle,cycle,3
+Fatal,Arterial,cycle,HGV,1
+Fatal,Arterial,cycle,LGV,0
+Fatal,Arterial,cycle,mbike,2
+Fatal,Arterial,cycle,NOV,0
+Fatal,Arterial,cycle,walk,13
+Fatal,Arterial,HGV,bus,12
+Fatal,Arterial,HGV,car,946
+Fatal,Arterial,HGV,cycle,169
+Fatal,Arterial,HGV,HGV,60
+Fatal,Arterial,HGV,LGV,74
+Fatal,Arterial,HGV,mbike,235
+Fatal,Arterial,HGV,NOV,18
+Fatal,Arterial,HGV,walk,362
+Fatal,Arterial,LGV,bus,0
+Fatal,Arterial,LGV,car,354
+Fatal,Arterial,LGV,cycle,45
+Fatal,Arterial,LGV,HGV,3
+Fatal,Arterial,LGV,LGV,17
+Fatal,Arterial,LGV,mbike,190
+Fatal,Arterial,LGV,NOV,5
+Fatal,Arterial,LGV,walk,153
+Fatal,Arterial,mbike,bus,0
+Fatal,Arterial,mbike,car,25
+Fatal,Arterial,mbike,cycle,9
+Fatal,Arterial,mbike,HGV,0
+Fatal,Arterial,mbike,LGV,0
+Fatal,Arterial,mbike,mbike,62
+Fatal,Arterial,mbike,NOV,1
+Fatal,Arterial,mbike,walk,107
+Fatal,Arterial,walk,bus,0
+Fatal,Arterial,walk,car,2
+Fatal,Arterial,walk,cycle,0
+Fatal,Arterial,walk,HGV,0
+Fatal,Arterial,walk,LGV,0
+Fatal,Arterial,walk,mbike,10
+Fatal,Arterial,walk,NOV,0
+Fatal,Arterial,walk,walk,0
 Fatal,Highway,bus,bus,0
-Fatal,Highway,bus,car/taxi,7
-Fatal,Highway,bus,cyclist,0
-Fatal,Highway,bus,heavy goods,2
-Fatal,Highway,bus,light goods,2
-Fatal,Highway,bus,motorcycle,2
+Fatal,Highway,bus,car,7
+Fatal,Highway,bus,cycle,0
+Fatal,Highway,bus,HGV,2
+Fatal,Highway,bus,LGV,2
+Fatal,Highway,bus,mbike,2
 Fatal,Highway,bus,NOV,0
-Fatal,Highway,bus,pedestrian,2
-Fatal,Highway,car/taxi,bus,2
-Fatal,Highway,car/taxi,car/taxi,203
-Fatal,Highway,car/taxi,cyclist,0
-Fatal,Highway,car/taxi,heavy goods,9
-Fatal,Highway,car/taxi,light goods,7
-Fatal,Highway,car/taxi,motorcycle,41
-Fatal,Highway,car/taxi,NOV,3
-Fatal,Highway,car/taxi,pedestrian,112
-Fatal,Highway,cyclist,bus,0
-Fatal,Highway,cyclist,car/taxi,0
-Fatal,Highway,cyclist,cyclist,0
-Fatal,Highway,cyclist,heavy goods,0
-Fatal,Highway,cyclist,light goods,0
-Fatal,Highway,cyclist,motorcycle,0
-Fatal,Highway,cyclist,NOV,0
-Fatal,Highway,cyclist,pedestrian,0
-Fatal,Highway,heavy goods,bus,7
-Fatal,Highway,heavy goods,car/taxi,253
-Fatal,Highway,heavy goods,cyclist,1
-Fatal,Highway,heavy goods,heavy goods,92
-Fatal,Highway,heavy goods,light goods,42
-Fatal,Highway,heavy goods,motorcycle,25
-Fatal,Highway,heavy goods,NOV,0
-Fatal,Highway,heavy goods,pedestrian,70
-Fatal,Highway,light goods,bus,0
-Fatal,Highway,light goods,car/taxi,43
-Fatal,Highway,light goods,cyclist,0
-Fatal,Highway,light goods,heavy goods,0
-Fatal,Highway,light goods,light goods,1
-Fatal,Highway,light goods,motorcycle,7
-Fatal,Highway,light goods,NOV,0
-Fatal,Highway,light goods,pedestrian,10
-Fatal,Highway,motorcycle,bus,0
-Fatal,Highway,motorcycle,car/taxi,0
-Fatal,Highway,motorcycle,cyclist,0
-Fatal,Highway,motorcycle,heavy goods,0
-Fatal,Highway,motorcycle,light goods,0
-Fatal,Highway,motorcycle,motorcycle,3
-Fatal,Highway,motorcycle,NOV,0
-Fatal,Highway,motorcycle,pedestrian,0
-Fatal,Highway,NOV,bus,3
-Fatal,Highway,NOV,car/taxi,286
-Fatal,Highway,NOV,cyclist,0
-Fatal,Highway,NOV,heavy goods,29
-Fatal,Highway,NOV,light goods,19
-Fatal,Highway,NOV,motorcycle,44
-Fatal,Highway,NOV,NOV,2
-Fatal,Highway,NOV,pedestrian,0
+Fatal,Highway,bus,walk,2
+Fatal,Highway,car,bus,2
+Fatal,Highway,car,car,203
+Fatal,Highway,car,cycle,0
+Fatal,Highway,car,HGV,9
+Fatal,Highway,car,LGV,7
+Fatal,Highway,car,mbike,41
+Fatal,Highway,car,NOV,3
+Fatal,Highway,car,walk,112
+Fatal,Highway,cycle,bus,0
+Fatal,Highway,cycle,car,0
+Fatal,Highway,cycle,cycle,0
+Fatal,Highway,cycle,HGV,0
+Fatal,Highway,cycle,LGV,0
+Fatal,Highway,cycle,mbike,0
+Fatal,Highway,cycle,NOV,0
+Fatal,Highway,cycle,walk,0
+Fatal,Highway,HGV,bus,7
+Fatal,Highway,HGV,car,253
+Fatal,Highway,HGV,cycle,1
+Fatal,Highway,HGV,HGV,92
+Fatal,Highway,HGV,LGV,42
+Fatal,Highway,HGV,mbike,25
+Fatal,Highway,HGV,NOV,0
+Fatal,Highway,HGV,walk,70
+Fatal,Highway,LGV,bus,0
+Fatal,Highway,LGV,car,43
+Fatal,Highway,LGV,cycle,0
+Fatal,Highway,LGV,HGV,0
+Fatal,Highway,LGV,LGV,1
+Fatal,Highway,LGV,mbike,7
+Fatal,Highway,LGV,NOV,0
+Fatal,Highway,LGV,walk,10
+Fatal,Highway,mbike,bus,0
+Fatal,Highway,mbike,car,0
+Fatal,Highway,mbike,cycle,0
+Fatal,Highway,mbike,HGV,0
+Fatal,Highway,mbike,LGV,0
+Fatal,Highway,mbike,mbike,3
+Fatal,Highway,mbike,NOV,0
+Fatal,Highway,mbike,walk,0
+Fatal,Highway,walk,bus,0
+Fatal,Highway,walk,car,0
+Fatal,Highway,walk,cycle,0
+Fatal,Highway,walk,HGV,0
+Fatal,Highway,walk,LGV,0
+Fatal,Highway,walk,mbike,0
+Fatal,Highway,walk,NOV,0
+Fatal,Highway,walk,walk,0
 Fatal,Local,bus,bus,2
-Fatal,Local,bus,car/taxi,94
-Fatal,Local,bus,cyclist,22
-Fatal,Local,bus,heavy goods,0
-Fatal,Local,bus,light goods,3
-Fatal,Local,bus,motorcycle,29
+Fatal,Local,bus,car,94
+Fatal,Local,bus,cycle,22
+Fatal,Local,bus,HGV,0
+Fatal,Local,bus,LGV,3
+Fatal,Local,bus,mbike,29
 Fatal,Local,bus,NOV,6
-Fatal,Local,bus,pedestrian,156
-Fatal,Local,car/taxi,bus,15
-Fatal,Local,car/taxi,car/taxi,1245
-Fatal,Local,car/taxi,cyclist,282
-Fatal,Local,car/taxi,heavy goods,3
-Fatal,Local,car/taxi,light goods,20
-Fatal,Local,car/taxi,motorcycle,970
-Fatal,Local,car/taxi,NOV,63
-Fatal,Local,car/taxi,pedestrian,1428
-Fatal,Local,cyclist,bus,2
-Fatal,Local,cyclist,car/taxi,2
-Fatal,Local,cyclist,cyclist,6
-Fatal,Local,cyclist,heavy goods,1
-Fatal,Local,cyclist,light goods,0
-Fatal,Local,cyclist,motorcycle,2
-Fatal,Local,cyclist,NOV,1
-Fatal,Local,cyclist,pedestrian,18
-Fatal,Local,heavy goods,bus,1
-Fatal,Local,heavy goods,car/taxi,207
-Fatal,Local,heavy goods,cyclist,65
-Fatal,Local,heavy goods,heavy goods,4
-Fatal,Local,heavy goods,light goods,14
-Fatal,Local,heavy goods,motorcycle,86
-Fatal,Local,heavy goods,NOV,9
-Fatal,Local,heavy goods,pedestrian,143
-Fatal,Local,light goods,bus,0
-Fatal,Local,light goods,car/taxi,205
-Fatal,Local,light goods,cyclist,39
-Fatal,Local,light goods,heavy goods,1
-Fatal,Local,light goods,light goods,6
-Fatal,Local,light goods,motorcycle,123
-Fatal,Local,light goods,NOV,8
-Fatal,Local,light goods,pedestrian,170
-Fatal,Local,motorcycle,bus,0
-Fatal,Local,motorcycle,car/taxi,8
-Fatal,Local,motorcycle,cyclist,7
-Fatal,Local,motorcycle,heavy goods,0
-Fatal,Local,motorcycle,light goods,0
-Fatal,Local,motorcycle,motorcycle,51
-Fatal,Local,motorcycle,NOV,4
-Fatal,Local,motorcycle,pedestrian,61
-Fatal,Local,NOV,bus,33
-Fatal,Local,NOV,car/taxi,1658
-Fatal,Local,NOV,cyclist,102
-Fatal,Local,NOV,heavy goods,13
-Fatal,Local,NOV,light goods,49
-Fatal,Local,NOV,motorcycle,440
-Fatal,Local,NOV,NOV,55
-Fatal,Local,NOV,pedestrian,0
+Fatal,Local,bus,walk,156
+Fatal,Local,car,bus,15
+Fatal,Local,car,car,1245
+Fatal,Local,car,cycle,282
+Fatal,Local,car,HGV,3
+Fatal,Local,car,LGV,20
+Fatal,Local,car,mbike,970
+Fatal,Local,car,NOV,63
+Fatal,Local,car,walk,1428
+Fatal,Local,cycle,bus,2
+Fatal,Local,cycle,car,2
+Fatal,Local,cycle,cycle,6
+Fatal,Local,cycle,HGV,1
+Fatal,Local,cycle,LGV,0
+Fatal,Local,cycle,mbike,2
+Fatal,Local,cycle,NOV,1
+Fatal,Local,cycle,walk,18
+Fatal,Local,HGV,bus,1
+Fatal,Local,HGV,car,207
+Fatal,Local,HGV,cycle,65
+Fatal,Local,HGV,HGV,4
+Fatal,Local,HGV,LGV,14
+Fatal,Local,HGV,mbike,86
+Fatal,Local,HGV,NOV,9
+Fatal,Local,HGV,walk,143
+Fatal,Local,LGV,bus,0
+Fatal,Local,LGV,car,205
+Fatal,Local,LGV,cycle,39
+Fatal,Local,LGV,HGV,1
+Fatal,Local,LGV,LGV,6
+Fatal,Local,LGV,mbike,123
+Fatal,Local,LGV,NOV,8
+Fatal,Local,LGV,walk,170
+Fatal,Local,mbike,bus,0
+Fatal,Local,mbike,car,8
+Fatal,Local,mbike,cycle,7
+Fatal,Local,mbike,HGV,0
+Fatal,Local,mbike,LGV,0
+Fatal,Local,mbike,mbike,51
+Fatal,Local,mbike,NOV,4
+Fatal,Local,mbike,walk,61
+Fatal,Local,walk,bus,0
+Fatal,Local,walk,car,2
+Fatal,Local,walk,cycle,2
+Fatal,Local,walk,HGV,0
+Fatal,Local,walk,LGV,1
+Fatal,Local,walk,mbike,7
+Fatal,Local,walk,NOV,2
+Fatal,Local,walk,walk,0
 Serious,Arterial,bus,bus,43
-Serious,Arterial,bus,car/taxi,725
-Serious,Arterial,bus,cyclist,396
-Serious,Arterial,bus,heavy goods,15
-Serious,Arterial,bus,light goods,43
-Serious,Arterial,bus,motorcycle,332
+Serious,Arterial,bus,car,725
+Serious,Arterial,bus,cycle,396
+Serious,Arterial,bus,HGV,15
+Serious,Arterial,bus,LGV,43
+Serious,Arterial,bus,mbike,332
 Serious,Arterial,bus,NOV,23
-Serious,Arterial,bus,pedestrian,1411
-Serious,Arterial,car/taxi,bus,524
-Serious,Arterial,car/taxi,car/taxi,24821
-Serious,Arterial,car/taxi,cyclist,8825
-Serious,Arterial,car/taxi,heavy goods,233
-Serious,Arterial,car/taxi,light goods,775
-Serious,Arterial,car/taxi,motorcycle,17081
-Serious,Arterial,car/taxi,NOV,316
-Serious,Arterial,car/taxi,pedestrian,16343
-Serious,Arterial,cyclist,bus,22
-Serious,Arterial,cyclist,car/taxi,76
-Serious,Arterial,cyclist,cyclist,125
-Serious,Arterial,cyclist,heavy goods,4
-Serious,Arterial,cyclist,light goods,5
-Serious,Arterial,cyclist,motorcycle,129
-Serious,Arterial,cyclist,NOV,5
-Serious,Arterial,cyclist,pedestrian,338
-Serious,Arterial,heavy goods,bus,96
-Serious,Arterial,heavy goods,car/taxi,3259
-Serious,Arterial,heavy goods,cyclist,582
-Serious,Arterial,heavy goods,heavy goods,328
-Serious,Arterial,heavy goods,light goods,282
-Serious,Arterial,heavy goods,motorcycle,783
-Serious,Arterial,heavy goods,NOV,86
-Serious,Arterial,heavy goods,pedestrian,660
-Serious,Arterial,light goods,bus,74
-Serious,Arterial,light goods,car/taxi,2622
-Serious,Arterial,light goods,cyclist,891
-Serious,Arterial,light goods,heavy goods,67
-Serious,Arterial,light goods,light goods,253
-Serious,Arterial,light goods,motorcycle,1521
-Serious,Arterial,light goods,NOV,41
-Serious,Arterial,light goods,pedestrian,1080
-Serious,Arterial,motorcycle,bus,8
-Serious,Arterial,motorcycle,car/taxi,343
-Serious,Arterial,motorcycle,cyclist,222
-Serious,Arterial,motorcycle,heavy goods,3
-Serious,Arterial,motorcycle,light goods,23
-Serious,Arterial,motorcycle,motorcycle,552
-Serious,Arterial,motorcycle,NOV,15
-Serious,Arterial,motorcycle,pedestrian,1245
-Serious,Arterial,NOV,bus,1164
-Serious,Arterial,NOV,car/taxi,11507
-Serious,Arterial,NOV,cyclist,737
-Serious,Arterial,NOV,heavy goods,416
-Serious,Arterial,NOV,light goods,454
-Serious,Arterial,NOV,motorcycle,5690
-Serious,Arterial,NOV,NOV,104
-Serious,Arterial,NOV,pedestrian,0
+Serious,Arterial,bus,walk,1411
+Serious,Arterial,car,bus,524
+Serious,Arterial,car,car,24821
+Serious,Arterial,car,cycle,8825
+Serious,Arterial,car,HGV,233
+Serious,Arterial,car,LGV,775
+Serious,Arterial,car,mbike,17081
+Serious,Arterial,car,NOV,316
+Serious,Arterial,car,walk,16343
+Serious,Arterial,cycle,bus,22
+Serious,Arterial,cycle,car,76
+Serious,Arterial,cycle,cycle,125
+Serious,Arterial,cycle,HGV,4
+Serious,Arterial,cycle,LGV,5
+Serious,Arterial,cycle,mbike,129
+Serious,Arterial,cycle,NOV,5
+Serious,Arterial,cycle,walk,338
+Serious,Arterial,HGV,bus,96
+Serious,Arterial,HGV,car,3259
+Serious,Arterial,HGV,cycle,582
+Serious,Arterial,HGV,HGV,328
+Serious,Arterial,HGV,LGV,282
+Serious,Arterial,HGV,mbike,783
+Serious,Arterial,HGV,NOV,86
+Serious,Arterial,HGV,walk,660
+Serious,Arterial,LGV,bus,74
+Serious,Arterial,LGV,car,2622
+Serious,Arterial,LGV,cycle,891
+Serious,Arterial,LGV,HGV,67
+Serious,Arterial,LGV,LGV,253
+Serious,Arterial,LGV,mbike,1521
+Serious,Arterial,LGV,NOV,41
+Serious,Arterial,LGV,walk,1080
+Serious,Arterial,mbike,bus,8
+Serious,Arterial,mbike,car,343
+Serious,Arterial,mbike,cycle,222
+Serious,Arterial,mbike,HGV,3
+Serious,Arterial,mbike,LGV,23
+Serious,Arterial,mbike,mbike,552
+Serious,Arterial,mbike,NOV,15
+Serious,Arterial,mbike,walk,1245
+Serious,Arterial,walk,bus,21
+Serious,Arterial,walk,car,135
+Serious,Arterial,walk,cycle,50
+Serious,Arterial,walk,HGV,5
+Serious,Arterial,walk,LGV,3
+Serious,Arterial,walk,mbike,260
+Serious,Arterial,walk,NOV,1
+Serious,Arterial,walk,walk,0
 Serious,Highway,bus,bus,2
-Serious,Highway,bus,car/taxi,45
-Serious,Highway,bus,cyclist,0
-Serious,Highway,bus,heavy goods,3
-Serious,Highway,bus,light goods,2
-Serious,Highway,bus,motorcycle,4
+Serious,Highway,bus,car,45
+Serious,Highway,bus,cycle,0
+Serious,Highway,bus,HGV,3
+Serious,Highway,bus,LGV,2
+Serious,Highway,bus,mbike,4
 Serious,Highway,bus,NOV,0
-Serious,Highway,bus,pedestrian,1
-Serious,Highway,car/taxi,bus,24
-Serious,Highway,car/taxi,car/taxi,2129
-Serious,Highway,car/taxi,cyclist,3
-Serious,Highway,car/taxi,heavy goods,71
-Serious,Highway,car/taxi,light goods,93
-Serious,Highway,car/taxi,motorcycle,556
-Serious,Highway,car/taxi,NOV,14
-Serious,Highway,car/taxi,pedestrian,101
-Serious,Highway,cyclist,bus,0
-Serious,Highway,cyclist,car/taxi,0
-Serious,Highway,cyclist,cyclist,0
-Serious,Highway,cyclist,heavy goods,0
-Serious,Highway,cyclist,light goods,0
-Serious,Highway,cyclist,motorcycle,0
-Serious,Highway,cyclist,NOV,0
-Serious,Highway,cyclist,pedestrian,0
-Serious,Highway,heavy goods,bus,57
-Serious,Highway,heavy goods,car/taxi,1192
-Serious,Highway,heavy goods,cyclist,0
-Serious,Highway,heavy goods,heavy goods,308
-Serious,Highway,heavy goods,light goods,189
-Serious,Highway,heavy goods,motorcycle,74
-Serious,Highway,heavy goods,NOV,23
-Serious,Highway,heavy goods,pedestrian,47
-Serious,Highway,light goods,bus,6
-Serious,Highway,light goods,car/taxi,353
-Serious,Highway,light goods,cyclist,1
-Serious,Highway,light goods,heavy goods,19
-Serious,Highway,light goods,light goods,41
-Serious,Highway,light goods,motorcycle,66
-Serious,Highway,light goods,NOV,2
-Serious,Highway,light goods,pedestrian,11
-Serious,Highway,motorcycle,bus,0
-Serious,Highway,motorcycle,car/taxi,8
-Serious,Highway,motorcycle,cyclist,0
-Serious,Highway,motorcycle,heavy goods,1
-Serious,Highway,motorcycle,light goods,0
-Serious,Highway,motorcycle,motorcycle,17
-Serious,Highway,motorcycle,NOV,0
-Serious,Highway,motorcycle,pedestrian,1
-Serious,Highway,NOV,bus,120
-Serious,Highway,NOV,car/taxi,1952
-Serious,Highway,NOV,cyclist,0
-Serious,Highway,NOV,heavy goods,159
-Serious,Highway,NOV,light goods,128
-Serious,Highway,NOV,motorcycle,413
-Serious,Highway,NOV,NOV,10
-Serious,Highway,NOV,pedestrian,0
+Serious,Highway,bus,walk,1
+Serious,Highway,car,bus,24
+Serious,Highway,car,car,2129
+Serious,Highway,car,cycle,3
+Serious,Highway,car,HGV,71
+Serious,Highway,car,LGV,93
+Serious,Highway,car,mbike,556
+Serious,Highway,car,NOV,14
+Serious,Highway,car,walk,101
+Serious,Highway,cycle,bus,0
+Serious,Highway,cycle,car,0
+Serious,Highway,cycle,cycle,0
+Serious,Highway,cycle,HGV,0
+Serious,Highway,cycle,LGV,0
+Serious,Highway,cycle,mbike,0
+Serious,Highway,cycle,NOV,0
+Serious,Highway,cycle,walk,0
+Serious,Highway,HGV,bus,57
+Serious,Highway,HGV,car,1192
+Serious,Highway,HGV,cycle,0
+Serious,Highway,HGV,HGV,308
+Serious,Highway,HGV,LGV,189
+Serious,Highway,HGV,mbike,74
+Serious,Highway,HGV,NOV,23
+Serious,Highway,HGV,walk,47
+Serious,Highway,LGV,bus,6
+Serious,Highway,LGV,car,353
+Serious,Highway,LGV,cycle,1
+Serious,Highway,LGV,HGV,19
+Serious,Highway,LGV,LGV,41
+Serious,Highway,LGV,mbike,66
+Serious,Highway,LGV,NOV,2
+Serious,Highway,LGV,walk,11
+Serious,Highway,mbike,bus,0
+Serious,Highway,mbike,car,8
+Serious,Highway,mbike,cycle,0
+Serious,Highway,mbike,HGV,1
+Serious,Highway,mbike,LGV,0
+Serious,Highway,mbike,mbike,17
+Serious,Highway,mbike,NOV,0
+Serious,Highway,mbike,walk,1
+Serious,Highway,walk,bus,1
+Serious,Highway,walk,car,3
+Serious,Highway,walk,cycle,0
+Serious,Highway,walk,HGV,1
+Serious,Highway,walk,LGV,0
+Serious,Highway,walk,mbike,0
+Serious,Highway,walk,NOV,0
+Serious,Highway,walk,walk,0
 Serious,Local,bus,bus,45
-Serious,Local,bus,car/taxi,695
-Serious,Local,bus,cyclist,299
-Serious,Local,bus,heavy goods,10
-Serious,Local,bus,light goods,37
-Serious,Local,bus,motorcycle,280
+Serious,Local,bus,car,695
+Serious,Local,bus,cycle,299
+Serious,Local,bus,HGV,10
+Serious,Local,bus,LGV,37
+Serious,Local,bus,mbike,280
 Serious,Local,bus,NOV,14
-Serious,Local,bus,pedestrian,1388
-Serious,Local,car/taxi,bus,445
-Serious,Local,car/taxi,car/taxi,21617
-Serious,Local,car/taxi,cyclist,12561
-Serious,Local,car/taxi,heavy goods,95
-Serious,Local,car/taxi,light goods,595
-Serious,Local,car/taxi,motorcycle,16132
-Serious,Local,car/taxi,NOV,643
-Serious,Local,car/taxi,pedestrian,26796
-Serious,Local,cyclist,bus,12
-Serious,Local,cyclist,car/taxi,118
-Serious,Local,cyclist,cyclist,223
-Serious,Local,cyclist,heavy goods,2
-Serious,Local,cyclist,light goods,5
-Serious,Local,cyclist,motorcycle,86
-Serious,Local,cyclist,NOV,5
-Serious,Local,cyclist,pedestrian,426
-Serious,Local,heavy goods,bus,36
-Serious,Local,heavy goods,car/taxi,1107
-Serious,Local,heavy goods,cyclist,348
-Serious,Local,heavy goods,heavy goods,62
-Serious,Local,heavy goods,light goods,108
-Serious,Local,heavy goods,motorcycle,500
-Serious,Local,heavy goods,NOV,49
-Serious,Local,heavy goods,pedestrian,549
-Serious,Local,light goods,bus,50
-Serious,Local,light goods,car/taxi,2051
-Serious,Local,light goods,cyclist,1040
-Serious,Local,light goods,heavy goods,18
-Serious,Local,light goods,light goods,137
-Serious,Local,light goods,motorcycle,1343
-Serious,Local,light goods,NOV,72
-Serious,Local,light goods,pedestrian,1788
-Serious,Local,motorcycle,bus,8
-Serious,Local,motorcycle,car/taxi,282
-Serious,Local,motorcycle,cyclist,196
-Serious,Local,motorcycle,heavy goods,3
-Serious,Local,motorcycle,light goods,8
-Serious,Local,motorcycle,motorcycle,492
-Serious,Local,motorcycle,NOV,25
-Serious,Local,motorcycle,pedestrian,942
-Serious,Local,NOV,bus,996
-Serious,Local,NOV,car/taxi,14282
-Serious,Local,NOV,cyclist,1460
-Serious,Local,NOV,heavy goods,181
-Serious,Local,NOV,light goods,434
-Serious,Local,NOV,motorcycle,6478
-Serious,Local,NOV,NOV,358
-Serious,Local,NOV,pedestrian,0
+Serious,Local,bus,walk,1388
+Serious,Local,car,bus,445
+Serious,Local,car,car,21617
+Serious,Local,car,cycle,12561
+Serious,Local,car,HGV,95
+Serious,Local,car,LGV,595
+Serious,Local,car,mbike,16132
+Serious,Local,car,NOV,643
+Serious,Local,car,walk,26796
+Serious,Local,cycle,bus,12
+Serious,Local,cycle,car,118
+Serious,Local,cycle,cycle,223
+Serious,Local,cycle,HGV,2
+Serious,Local,cycle,LGV,5
+Serious,Local,cycle,mbike,86
+Serious,Local,cycle,NOV,5
+Serious,Local,cycle,walk,426
+Serious,Local,HGV,bus,36
+Serious,Local,HGV,car,1107
+Serious,Local,HGV,cycle,348
+Serious,Local,HGV,HGV,62
+Serious,Local,HGV,LGV,108
+Serious,Local,HGV,mbike,500
+Serious,Local,HGV,NOV,49
+Serious,Local,HGV,walk,549
+Serious,Local,LGV,bus,50
+Serious,Local,LGV,car,2051
+Serious,Local,LGV,cycle,1040
+Serious,Local,LGV,HGV,18
+Serious,Local,LGV,LGV,137
+Serious,Local,LGV,mbike,1343
+Serious,Local,LGV,NOV,72
+Serious,Local,LGV,walk,1788
+Serious,Local,mbike,bus,8
+Serious,Local,mbike,car,282
+Serious,Local,mbike,cycle,196
+Serious,Local,mbike,HGV,3
+Serious,Local,mbike,LGV,8
+Serious,Local,mbike,mbike,492
+Serious,Local,mbike,NOV,25
+Serious,Local,mbike,walk,942
+Serious,Local,walk,bus,18
+Serious,Local,walk,car,114
+Serious,Local,walk,cycle,71
+Serious,Local,walk,HGV,3
+Serious,Local,walk,LGV,2
+Serious,Local,walk,mbike,152
+Serious,Local,walk,NOV,8
+Serious,Local,walk,walk,0

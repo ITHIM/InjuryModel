@@ -8,14 +8,14 @@ stats19_0515 <- readRDS("./1b_DataCreated/stats19_05-15_ready_v3.Rds")
 
 #limit casualties to Serious/Fatal
 stats19_0515 = stats19_0515[stats19_0515$cas_severity!='Slight', ]
-#stats19_0515 = stats19_0515[stats19_0515$strike_mode!=8, ]    # no other vehicle discarded
+stats19_0515 = stats19_0515[stats19_0515$strike_mode.int!=8, ]    # no other vehicle discarded
 
-#recode strike mode to labels
-stats19_0515$strike_mode = recode(stats19_0515$strike_mode, '1'="walk",'2' ="cycle",'3'="mbike",
-                                  '4'="car",'5'="LGV",'6'="bus",'7'="HGV",
+#recode & rename strike mode to ITHIM categories
+stats19_0515$strike_mode = recode(stats19_0515$strike_mode.int, '1'="walk",'2' ="cycle",'3'="mbike",
+                                  '4'="car",'5'="LGV",'6'="bus",'7'="HGV", '9'= 'other',
                                   '8' = "NOV", '99' ="other or unknown")
 
-stats19_0515$cas_mode = recode(stats19_0515$cas_mode, '1'="walk",'2' ="cycle",'3'="mbike",
+stats19_0515$cas_mode = recode(stats19_0515$cas_mode.int, '1'="walk",'2' ="cycle",'3'="mbike",
                                   '4'="car",'5'="LGV",'6'="bus",'7'="HGV",
                                   '8' = "NOV", '99' ="other or unknown")
 
@@ -35,7 +35,7 @@ output <- group_by(stats19_0515, cas_severity, roadtype, strike_mode, cas_mode) 
 
 output <- as.data.frame(output)
 output <- output[output$strike_mode !='other or unknown',]
-output$cas_mode[output$cas_mode=='other or unknown']='NOV'
+output$cas_mode[output$cas_mode=='other or unknown']='NOV'   #check this assumption
 
 output = dplyr::rename(output, severity =cas_severity ,
                                roadType  = roadtype   ,
