@@ -1,7 +1,8 @@
 # carries on processing object: stopped  
 
 #deletes legacy objects / rm(list=ls())
-rm(Accidents0515,av,avc, Casualties0515,Vehicles0515)
+rm(a0514, a2015, av, avc, c0514, c2015,Accidents0515,av,avc,
+   Casualties0515,Vehicles0515, v0514, v2015)
 
 library(stringr)
 library(readstata13)
@@ -25,7 +26,7 @@ rm(td)
 stopped$st_road_class =  recode(stopped$st_road_class,'1'=1,'2' = 1, '3'=2, '4'=3,'5'=3, '6'=3) #1 unchanged
 stopped$roadtype = recode(stopped$st_road_class, '1'="Motorway/A(M)", '2'="A", '3'="B, C, Unclassified") 
 
-# MODE AND SEX OF VEHICLE AND CASUALTY
+# VEHICLE MODE AND CASUALTY SEX
 stopped$veh_mode = recode(stopped$vehicle_type,'-1'=99, '1'=2, '2'=3,'3'=3, '4'=3, '5'=3, '8'=4, '9'=4,
                               '10'=6, '11'=6, '16'=99, '17'=99,'18'=99, '19'=5, '20'=7, '21'=7, '22'=99,
                               '23'=3, '90'=99, '97'=3, '98'=7 ) 
@@ -183,7 +184,7 @@ stopped$veh_mode_secondlarge = as.character(stopped$veh_mode_secondlarge)
 #output: 3 strike* vars w. integers categories
 for (x in c('mode','male','age')) {
 
-  stopped[[paste0('strike_', x) ]]= '0'   #creates the vars (char type imposed by factors treatment)
+  stopped[[paste0('strike_', x) ]]= NA   #creates the vars (char type imposed by factors treatment)
 
   sel= (stopped$cas_mode.int==1)
   stopped[[paste0('strike_', x) ]][sel] = stopped[[paste0('veh_', x) ]][sel]    # 1 if cas_mode.int==1, 0 otherwise
@@ -246,7 +247,10 @@ stopped = arrange(stopped, accident_index, year, roadtype, cas_severity, cas_mod
 # ncol2= which(names(stopped)=='strike_age')
 # stopped = stopped [, c(ncol1:ncol2) ]
 
-saveRDS(stopped, './1b_DataCreated/stats19_05-15_ready_v3.Rds')  # input for ITHIM conversion
+cols =c('year', 'roadtype', 'cas_severity', 'cas_mode', 'cas_mode.int', 'cas_male',
+        'cas_age', 'strike_mode', 'strike_mode.int', 'strike_male', 'strike_age') 
+
+saveRDS(stopped[, cols], './1b_DataCreated/stats19_05-15_ready_v3.Rds')  # input for ITHIM conversion
 
 
 # ***************************
