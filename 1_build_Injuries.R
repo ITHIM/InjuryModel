@@ -182,7 +182,7 @@ stopped$veh_mode_firstlarge = as.character(stopped$veh_mode_firstlarge)
 stopped$veh_mode_secondlarge = as.character(stopped$veh_mode_secondlarge)
 
 #output: 3 strike* vars w. integers categories
-for (x in c('mode','male','age')) {
+for (x in c('reference', 'mode','male','age')) {
 
   stopped[[paste0('strike_', x) ]]= NA   #creates the vars (char type imposed by factors treatment)
 
@@ -247,8 +247,9 @@ stopped = arrange(stopped, accident_index, year, roadtype, cas_severity, cas_mod
 # ncol2= which(names(stopped)=='strike_age')
 # stopped = stopped [, c(ncol1:ncol2) ]
 
-cols =c('year', 'roadtype', 'cas_severity', 'cas_mode', 'cas_mode.int', 'cas_male',
-        'cas_age', 'strike_mode', 'strike_mode.int', 'strike_male', 'strike_age') 
+cols =c('accident_index', 'number_of_vehicles', "casualty_reference", "veh_reference",
+        'strike_reference', 'year', 'roadtype', 'cas_severity', 'cas_mode', 'cas_mode.int',
+        'cas_male','cas_age', 'strike_mode', 'strike_mode.int', 'strike_male', 'strike_age') 
 
 saveRDS(stopped[, cols], './1b_DataCreated/stats19_05-15_ready_v3.Rds')  # input for ITHIM conversion
 
