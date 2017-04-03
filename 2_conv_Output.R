@@ -3,7 +3,7 @@
 
 library(tidyverse)
 
-stats19_0515 <- readRDS("./1b_DataCreated/stats19_05-15_ready_v3.Rds")
+stats19_0515 <- readRDS("./1b_DataCreated/stats19_05-15_ready_v3.1.Rds")
 
 
 #limit casualties to Serious/Fatal

@@ -251,7 +251,7 @@ cols =c('accident_index', 'number_of_vehicles', "casualty_reference", "veh_refer
         'strike_reference', 'year', 'roadtype', 'cas_severity', 'cas_mode', 'cas_mode.int',
         'cas_male','cas_age', 'strike_mode', 'strike_mode.int', 'strike_male', 'strike_age') 
 
-saveRDS(stopped[, cols], './1b_DataCreated/stats19_05-15_ready_v3.Rds')  # input for ITHIM conversion
+saveRDS(stopped[, cols], './1b_DataCreated/stats19_05-15_ready_v3.1.Rds')  # input for ITHIM conversion
 
 
 # ***************************
