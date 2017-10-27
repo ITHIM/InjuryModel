@@ -97,6 +97,7 @@ if(file.exists('travel_times.Rdata')){
 
 cat('\nTravel times ("TT1"):\n')
 print(as.array(apply(TT1,c(1,3),sum)))
+trip_ages <- as.numeric(dimnames(TT1)[[2]])
 travel_ages <- c(trip_ages,110) # travel_ages: as defined by travel data, currently as input into analytica
 ## convert travel times to cover all age categories
 TT.impute <- to.tensor(0,dims=c(cas_age_band=nall_ages-1,cas_mode=8,cas_male=2))
