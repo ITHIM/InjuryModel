@@ -150,11 +150,11 @@ for(i in 1:length(factors)){
   ssg.scen2 <- create_scenario(scenario_table=scenario2.0,ssg.base=ssg.base,A.base=A.base)
   tabs2 <- scenario_predictions(fitted.values=fitted.values,newdata=ssg.scen2,get.se=FALSE)
   Ahat[i,1] <- mean(tabs2[tabs2$cas_mode=='pedestrian'&tabs2$strike_mode=='motorcycle',11])
-  Ahat[i,2] <- mean(tabs2[tabs2$cas_mode=='pedestrian'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band=='[0,16)',11])
-  Ahat[i,3] <- mean(tabs2[tabs2$cas_mode=='pedestrian'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band!='[0,16)',11])
+  Ahat[i,2] <- mean(tabs2[tabs2$cas_mode=='pedestrian'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band=='[0,20)',11])
+  Ahat[i,3] <- mean(tabs2[tabs2$cas_mode=='pedestrian'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band!='[0,20)',11])
   Ahat[i,4] <- mean(tabs2[tabs2$cas_mode=='cyclist'&tabs2$strike_mode=='motorcycle',11])
-  Ahat[i,5] <- mean(tabs2[tabs2$cas_mode=='cyclist'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band=='[0,16)',11])
-  Ahat[i,6] <- mean(tabs2[tabs2$cas_mode=='cyclist'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band!='[0,16)',11])
+  Ahat[i,5] <- mean(tabs2[tabs2$cas_mode=='cyclist'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band=='[0,20)',11])
+  Ahat[i,6] <- mean(tabs2[tabs2$cas_mode=='cyclist'&tabs2$strike_mode=='motorcycle'&tabs2$cas_age_band!='[0,20)',11])
   Acheck[i,1] <- mean(tabs2[tabs2$cas_mode=='pedestrian'&tabs2$strike_mode=='motorcycle',13])
   Acheck[i,2] <- mean(tabs2[tabs2$cas_mode=='cyclist'&tabs2$strike_mode=='motorcycle',13])
   Acheck[i,3] <- mean(tabs2[tabs2$cas_mode=='car/taxi'&tabs2$strike_mode=='motorcycle',13])
@@ -165,6 +165,11 @@ legend <- c('Pedestrian','Cyclist','Car/taxi','Motorcycle')
 x11(); par(mar=c(5,5,1,1));matplot(factors,Acheck,typ='l',lwd=3,lty=1,col=cols,ylim=c(1,1.25),
   frame=F,cex.axis=1.5,cex.lab=1.5,xlab='Relative travel times of 0-16 year olds',ylab='"cas_reltime_group" (a)'); 
 legend(x=1,y=1.25,legend=legend,bty='n',col=c(cols),lty=1,lwd=3,cex=1.25)
+cols <- c('navyblue','grey','hotpink','purple','turquoise','skyblue')
+legend <- c('Pedestrian','Pedestrian < 20','Pedestrian > 20','Cyclist','Cyclist < 20','Cyclist > 20')
+x11(); par(mar=c(5,5,1,1));matplot(factors,Ahat,typ='l',lwd=3,lty=1,col=cols,ylim=c(0.8,1.5),
+  frame=F,cex.axis=1.5,cex.lab=1.5,xlab='Relative travel times of 0-16 year olds',ylab='"cas_reltime" (c)'); 
+legend(x=1,y=1.5,legend=legend,bty='n',col=c(cols),lty=1,lwd=3,cex=1.25)
 
 
 
